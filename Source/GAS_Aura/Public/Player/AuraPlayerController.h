@@ -9,6 +9,7 @@
 
 class UInputMappingContext;
 class UInputAction;
+class IEnemyInterface;
 
 struct FInputActionValue;
 
@@ -19,17 +20,26 @@ class GAS_AURA_API AAuraPlayerController : public APlayerController
 
 public:
 	AAuraPlayerController();
+	virtual void PlayerTick(float DeltaTime) override;
 	
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 	
 private:
+	/* Movement */
 	void Move(const FInputActionValue& InputActionValue);
 	
 	UPROPERTY(EditAnywhere , Category = "Input")
 	TObjectPtr<UInputMappingContext> AuraContext;
-
 	UPROPERTY(EditAnywhere , Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
+	/* /Movement */
+
+	/* CursorTrace */
+	void CursorTrace();
+	
+	IEnemyInterface* LastActor;
+	IEnemyInterface* ThisActor;
+	/* /CursorTrace */
 };
