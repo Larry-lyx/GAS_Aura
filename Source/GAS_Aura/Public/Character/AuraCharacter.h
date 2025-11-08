@@ -11,4 +11,6 @@ class GAS_AURA_API AAuraCharacter : public AAuraBaseCharacter
 {
 	GENERATED_BODY()
 	
+public:
+	AAuraCharacter();
 };
