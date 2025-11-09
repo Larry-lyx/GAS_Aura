@@ -37,7 +37,7 @@ class GAS_AURA_API UAuraWidgetController : public UObject
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCparams);
-	
+	virtual void BroadcastInitValues();
 protected:
 	UPROPERTY(BlueprintReadOnly , Category = "WidgetController")
 	TObjectPtr<APlayerController> PlayerController;
