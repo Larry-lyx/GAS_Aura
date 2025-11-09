@@ -39,12 +39,12 @@ public:
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCparams);
 	
 protected:
-	UPROPERTY(BlueprintReadOnly , Category = "WidgetControleer")
+	UPROPERTY(BlueprintReadOnly , Category = "WidgetController")
 	TObjectPtr<APlayerController> PlayerController;
-	UPROPERTY(BlueprintReadOnly , Category = "WidgetControleer")
+	UPROPERTY(BlueprintReadOnly , Category = "WidgetController")
 	TObjectPtr<APlayerState> PlayerState;
-	UPROPERTY(BlueprintReadOnly , Category = "WidgetControleer")
+	UPROPERTY(BlueprintReadOnly , Category = "WidgetController")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-	UPROPERTY(BlueprintReadOnly , Category = "WidgetControleer")
+	UPROPERTY(BlueprintReadOnly , Category = "WidgetController")
 	TObjectPtr<UAttributeSet> AttributeSet;
 };
