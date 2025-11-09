@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ActiveGameplayEffectHandle.h"
 #include "GameFramework/Actor.h"
 #include "AuraEffectActor.generated.h"
 
@@ -21,6 +22,7 @@ enum class EEffectRemovalPolicy : uint8
 	DoNotRemove
 };
 
+class UAbilitySystemComponent;
 class UGameplayEffect;
 
 UCLASS()
@@ -61,5 +63,6 @@ protected:
 	EEffectApplicationPolicy InfiniteEffectApplicationPolicy = EEffectApplicationPolicy::DoNotApply;
 	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Applied Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
+	TMap<FActiveGameplayEffectHandle , UAbilitySystemComponent*> ActiveEffectHandles;
 	
 };
