@@ -21,10 +21,9 @@ public:
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 	
 protected:
-	/* Begin Ability System */
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+	
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
-	/* End Ability System */
 };
