@@ -11,7 +11,7 @@ class UAuraUserWidget;
 struct FGameplayTag;
 struct FOnAttributeChangeData;
 
-USTRUCT(blueprintType)
+USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
 {
 	GENERATED_BODY()

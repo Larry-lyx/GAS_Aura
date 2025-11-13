@@ -37,7 +37,10 @@ class GAS_AURA_API UAuraWidgetController : public UObject
 public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCparams);
+
+	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitValues();
+	
 	virtual void BindCallbacksToDependencies();
 	
 protected:
