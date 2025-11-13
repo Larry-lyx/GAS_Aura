@@ -8,7 +8,7 @@
 /*
  * Aura Gameplay Tags
  *
- * Singleton , there is only one instance
+ * Singleton , there is only one in the whole project
  * contains native gameplay tags
  * native means defined in c++ , belongs to the core tags
  */
@@ -17,6 +17,8 @@ struct  FAuraGameplayTags
 public:
 	static const FAuraGameplayTags& Get(){return GameplayTags;}
 	static void InitializeNativeGameplayTags();
+
+	FGameplayTag Attributes_Secondary_Armor;
 	
 protected:
 
