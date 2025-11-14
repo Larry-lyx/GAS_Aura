@@ -15,15 +15,17 @@ class GAS_AURA_API UAuraInputComponent : public UEnhancedInputComponent
 
 public:
 	template<class UserClass , typename PressedFuncType , typename ReleasedFuncType , typename HeldFuncType>
-	void BindAbilityActions(const UAuraConfigInput& InputConfig , UserClass* Object , PressedFuncType PressedFunc , ReleasedFuncType ReleasedFunc , HeldFuncType HeldFunc);
+	void BindAbilityActions(const UAuraConfigInput* InputConfig , UserClass* Object , PressedFuncType PressedFunc , ReleasedFuncType ReleasedFunc , HeldFuncType HeldFunc);
 	
 };
 
 template <class UserClass, typename PressedFuncType, typename ReleasedFuncType, typename HeldFuncType>
-void UAuraInputComponent::BindAbilityActions(const UAuraConfigInput& InputConfig, UserClass* Object,
+void UAuraInputComponent::BindAbilityActions(const UAuraConfigInput* InputConfig, UserClass* Object,
 	PressedFuncType PressedFunc, ReleasedFuncType ReleasedFunc, HeldFuncType HeldFunc)
 {
-	for (const FAuraInputAction& Action : InputConfig.AbilityInputActions)
+	check(InputConfig);
+	
+	for (const FAuraInputAction& Action : InputConfig->AbilityInputActions)
 	{
 		if (Action.InputAction && Action.InputTag.IsValid())
 		{
