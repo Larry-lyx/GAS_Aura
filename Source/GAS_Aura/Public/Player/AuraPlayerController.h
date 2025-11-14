@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerController.h"
 #include "AuraPlayerController.generated.h"
 
+class UAuraAbilitySystemComponent;
 struct FGameplayTag;
 class UAuraConfigInput;
 class UInputMappingContext;
@@ -29,6 +30,11 @@ protected:
 	virtual void SetupInputComponent() override;
 	
 private:
+	UPROPERTY()
+	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
+
+	UAuraAbilitySystemComponent* GetASC();
+	
 	/* Begin Movement */
 	void Move(const FInputActionValue& InputActionValue);
 	
