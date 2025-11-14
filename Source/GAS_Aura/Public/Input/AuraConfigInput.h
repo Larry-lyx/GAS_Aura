@@ -24,4 +24,9 @@ class GAS_AURA_API UAuraConfigInput : public UDataAsset
 {
 	GENERATED_BODY()
 	
+public:
+	const UInputAction* FindInputActionForTag(const FGameplayTag& InputTag , bool bLogNotFound = false) const;
+	
+	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
+	TArray<FAuraInputAction> AbilityInputActions;
 };
