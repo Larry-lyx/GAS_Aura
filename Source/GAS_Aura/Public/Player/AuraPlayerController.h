@@ -52,6 +52,8 @@ private:
 	
 	IEnemyInterface* LastActor;
 	IEnemyInterface* ThisActor;
+
+	FHitResult CursorHitResult;
 	/* End Cursor Trace */
 
 	/* Begin Ability Input */
