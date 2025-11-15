@@ -5,7 +5,10 @@
 #include "CoreMinimal.h"
 #include "Character/AuraBaseCharacter.h"
 #include "Interaction/EnemyInterface.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 #include "AuraEnemy.generated.h"
+
+class UWidgetComponent;
 
 UCLASS()
 class GAS_AURA_API AAuraEnemy : public AAuraBaseCharacter , public IEnemyInterface
@@ -23,6 +26,12 @@ public:
 	/* Begin Combat Interface */
 	virtual int32 GetPlayerLevel() override;
 	/* End Combat Interface */
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnHealthChanged;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnMaxHealthChanged;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -30,4 +39,7 @@ protected:
 
 	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Character Class Defaults")
 	int32 Level = 1;
+
+	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> HealthBar;
 };
