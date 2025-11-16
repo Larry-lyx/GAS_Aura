@@ -6,6 +6,21 @@
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 #include "AuraProjectileSpell.generated.h"
 
+/**
+ * GA : Projectile Spell
+ * general for all kinds of projectile spells
+ *
+ * main function:
+ * Activate Ability
+ * Spawn Projectile
+ * Define GE
+ *
+ * Projectile GE is applied when the projectile actor hit the target
+ * while the class of GE is defined in GA
+ * so Projectile doesn't need to know what kind of damage it causes
+ * Actually , Projectile Spell GA controls which GE will be applied
+ */
+
 class AAuraProjectile;
 
 UCLASS()
@@ -14,14 +29,22 @@ class GAS_AURA_API UAuraProjectileSpell : public UAuraGameplayAbility
 	GENERATED_BODY()
 
 protected:
+	/* Activate Ability Begin */
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
+	/* Activate Ability End */
 
+	/* Spawn Projectile Begin */
+	
+	// SpawnProjectile in Blueprint , because we want to spawn projectile when received notify from montage
 	UFUNCTION(BlueprintCallable , Category = "Projectile")
 	void SpawnProjectile(const FVector& ProjectileTargetLocation);
 	
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
+	/* Spawn Projectile End */
 
+	/* Define GE Begin */
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect> DamageEffectClass;
+	/* Define GE End */
 };
