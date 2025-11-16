@@ -2,7 +2,6 @@
 
 
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
-
 #include "AbilitySystemComponent.h"
 #include "GameplayEffectTypes.h"
 #include "Game/AuraGameModeBase.h"
@@ -11,6 +10,14 @@
 #include "UI/HUD/AuraHUD.h"
 #include "UI/WidgetController/AuraWidgetController.h"
 
+/**
+ * Get Widget Controller
+ * so we need Widget Controller Params , which need PC , PS , ASC , AS
+ * PC can be got from WorldContextObject
+ * PS can be got from PC
+ * AS can be got from PS
+ * ASC can be got from PS
+ */
 UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
 {
 	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject , 0))
@@ -26,7 +33,6 @@ UOverlayWidgetController* UAuraAbilitySystemLibrary::GetOverlayWidgetController(
 	}
 	return nullptr;
 }
-
 UAttributeMenuWidgetController* UAuraAbilitySystemLibrary::GetAttributeMenuWidgetController(const UObject* WorldContextObject)
 {
 	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject , 0))
@@ -45,10 +51,15 @@ UAttributeMenuWidgetController* UAuraAbilitySystemLibrary::GetAttributeMenuWidge
 
 void UAuraAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* WorldContextObject , ECharacterClass CharacterClass, float Level , UAbilitySystemComponent* ASC)
 {
+	/**
+	 * Initialize default attributes by applying GE defined in CharacterClassInfo
+	 * which is stored in gamemode , DA_CharacterClassInfo in BP_AuraGameMode
+	 */
+	
 	AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
-
 	if (AuraGameMode == nullptr) return;
 
+	// Source Object should be set , or we will get a bug
 	AActor* AvatarActor = ASC->GetAvatarActor();
 
 	UCharacterClassInfo* CharacterClassInfo = AuraGameMode->CharacterClassInfo;

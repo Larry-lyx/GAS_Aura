@@ -8,6 +8,17 @@
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+/**
+ * Custom Blueprint Function Library
+ * all the functions here can be used in Blueprint and C++
+ * so they must be static
+ *
+ * main functions:
+ * 1. Get Overlay Widget Controller
+ * 2. Get Attribute Menu Widget Controller
+ * 3. Initialize Default Attributes for different character class (Enemy)
+ */
+
 class UOverlayWidgetController;
 
 UCLASS()
@@ -16,6 +27,7 @@ class GAS_AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	// pure means just get , doesn't change anything
 	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|WidgetController")
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
 	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|WidgetController")
