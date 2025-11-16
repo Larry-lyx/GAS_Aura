@@ -7,6 +7,19 @@
 #include "GameFramework/Actor.h"
 #include "AuraEffectActor.generated.h"
 
+/**
+ * Effect Actor is the carrier of GE
+ * like potion , crystal , fire and projectile ...
+ *
+ * main functions:
+ * 1. Apply GE when Overlap Begin / End
+ *
+ * main properties:
+ * Level
+ * 3 kinds of GE : instant , duration , infinite
+ */
+
+// tell GE when to Apply
 UENUM(BlueprintType)
 enum class EEffectApplicationPolicy : uint8
 {
@@ -15,6 +28,7 @@ enum class EEffectApplicationPolicy : uint8
 	DoNotApply
 };
 
+// tell infinite GE when to remove
 UENUM(BlueprintType)
 enum class EEffectRemovalPolicy : uint8
 {
@@ -39,9 +53,9 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor* TargetActor , TSubclassOf<UGameplayEffect> GameplayEffectClass);
 
-	UFUNCTION(blueprintCallable)
+	UFUNCTION(BlueprintCallable)
 	void OnOverlap(AActor* TargetActor);
-	UFUNCTION(blueprintCallable)
+	UFUNCTION(BlueprintCallable)
 	void OnEndOverlap(AActor* TargetActor);
 
 	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Applied Effects")
