@@ -7,10 +7,7 @@ FAuraAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplayTag& A
 {
 	for (const FAuraAttributeInfo& Info : AttributeInformation)
 	{
-		if (Info.AttributeTag.MatchesTagExact(AttributeTag))
-		{
-			return Info;
-		}
+		if (Info.AttributeTag.MatchesTagExact(AttributeTag)) return Info;
 	}
 
 	if (bLogNotFound)

@@ -7,6 +7,10 @@
 #include "Engine/DataAsset.h"
 #include "AttributeInfo.generated.h"
 
+/**
+ * Data Asset for Attribute Info
+ */
+
 USTRUCT(BlueprintType)
 struct FAuraAttributeInfo
 {
@@ -14,13 +18,10 @@ struct FAuraAttributeInfo
 
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	FGameplayTag AttributeTag = FGameplayTag();
-
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	FText AttributeName = FText();
-
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	FText AttributeDescription = FText();
-
 	UPROPERTY(BlueprintReadOnly)
 	float AttributeValue = 0.0f;
 };

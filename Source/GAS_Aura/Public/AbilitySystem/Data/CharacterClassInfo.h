@@ -6,6 +6,21 @@
 #include "Engine/DataAsset.h"
 #include "CharacterClassInfo.generated.h"
 
+/**
+ * Data Asset for Character Class
+ * Three types of Character : Elementalist , Warrior , Ranger
+ * each type has different PrimaryAttributes
+ * while all of them share the same SecondaryAttributes and VitalAttributes
+ *
+ * Attributes here actually means the default values of different attributes
+ * as we use GE to set their default value
+ *
+ * For Secondary Attributes , we use infinite GE , as primary attributes may change during the game and they should also change
+ * the way to derive secondary attributes from primary attributes are the same
+ *
+ * For Vital Attributes , we simply use instant GE to set the initial value of health and mana
+ */
+
 class UGameplayEffect;
 
 UENUM(BlueprintType)
@@ -36,7 +51,6 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly , Category = "Common Class Default")
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
-
 	UPROPERTY(EditDefaultsOnly , Category = "Common Class Default")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
 
