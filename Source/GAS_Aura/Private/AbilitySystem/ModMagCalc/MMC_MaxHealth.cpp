@@ -8,6 +8,11 @@
 
 UMMC_MaxHealth::UMMC_MaxHealth()
 {
+	/**
+	 * Capture VigorAttribute
+	 * As Vigor might change during the game , we can't use SnapShot to store it
+	 */
+	
 	VigorDef.AttributeToCapture = UAuraAttributeSet::GetVigorAttribute();
 	VigorDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	VigorDef.bSnapshot = false;
@@ -17,10 +22,14 @@ UMMC_MaxHealth::UMMC_MaxHealth()
 
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
-	// Gather Tags
+	/**
+	 * 1. Get Vigor from VigorDef
+	 * 2. Get PlayerLevel
+	 * 3. Calculate MaxHealth
+	 */
+	
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
-
 	FAggregatorEvaluateParameters EvaluateParameters;
 	EvaluateParameters.SourceTags = SourceTags;
 	EvaluateParameters.TargetTags = TargetTags;

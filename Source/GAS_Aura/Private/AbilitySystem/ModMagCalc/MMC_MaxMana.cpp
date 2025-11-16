@@ -7,6 +7,11 @@
 
 UMMC_MaxMana::UMMC_MaxMana()
 {
+	/**
+	 * Capture IntelligenceAttribute
+	 * As Intelligence might change during the game , we can't use SnapShot to store it
+	 */
+	
 	IntelligenceDef.AttributeToCapture = UAuraAttributeSet::GetIntelligenceAttribute();
 	IntelligenceDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Target;
 	IntelligenceDef.bSnapshot = false;
@@ -16,10 +21,14 @@ UMMC_MaxMana::UMMC_MaxMana()
 
 float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
-	// Gather Tags
+	/**
+	 * 1. Get Intelligence from IntelligenceDef
+	 * 2. Get PlayerLevel
+	 * 3. Calculate MaxMana
+	 */
+	
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
-
 	FAggregatorEvaluateParameters EvaluateParameters;
 	EvaluateParameters.SourceTags = SourceTags;
 	EvaluateParameters.TargetTags = TargetTags;
