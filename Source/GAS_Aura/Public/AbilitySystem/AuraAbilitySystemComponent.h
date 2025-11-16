@@ -12,6 +12,9 @@
  * main functions added:
  * 1. When GE applied to Character , broadcast its containing gameplay tags
  * 2. Give , Activate and Release GA
+ *
+ * Basically , ASC hold every information we need in GAS
+ * Almost all of the functions in GAS should be called through ASC
  */
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags , const FGameplayTagContainer& /* Asset Tags */);

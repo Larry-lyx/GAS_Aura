@@ -10,6 +10,10 @@
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
+	/**
+	 * Bind Tag to Attribute
+	 */
+	
 	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
 	
 	TagToAttribute.Add(GameplayTags.Attributes_Primary_Strength , GetStrengthAttribute);
@@ -31,6 +35,10 @@ UAuraAttributeSet::UAuraAttributeSet()
 
 void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
+	/**
+	 * All Attributes Change will be replicated from Server to Client with no condition
+	 */
+	
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , Strength , COND_None , REPNOTIFY_Always);
@@ -44,9 +52,9 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimePropert
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , CriticalHitChance , COND_None , REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , CriticalHitDamage , COND_None , REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , CriticalHitResistance , COND_None , REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , Resilience , COND_None , REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , HealthRegeneration , COND_None , REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , ManaRegeneration , COND_None , REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , MaxHealth , COND_None , REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , MaxMana , COND_None , REPNOTIFY_Always);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , Health , COND_None , REPNOTIFY_Always);
@@ -55,6 +63,14 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimePropert
 
 void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
+	/**
+	 * Clamp before Attribute Change
+	 * it means when some GE is going to change attribute value to an illegal value
+	 * this illegal change will be clamped
+	 * 
+	 * However , this usually doesn't work , as it never changes the real value of the attribute
+	 */
+	
 	Super::PreAttributeChange(Attribute, NewValue);
 
 	if (Attribute == GetHealthAttribute())
@@ -69,6 +85,10 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
+	/**
+	 * After GE applied , we should calculate the change of attribute values
+	 */
+	
 	Super::PostGameplayEffectExecute(Data);
 
 	FEffectProperties Props;
@@ -85,81 +105,71 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	}
 }
 
+/**
+ *  Callbacks for Attribute Changes
+ *  Basically means what Client will do when it gets the change of attributes
+ *  here we just change the value
+ */
 void UAuraAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , Strength , OldStrength);
 }
-
 void UAuraAttributeSet::OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , Intelligence , OldIntelligence);
 }
-
 void UAuraAttributeSet::OnRep_Resilience(const FGameplayAttributeData& OldResilience) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , Resilience , OldResilience);
 }
-
 void UAuraAttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , Vigor , OldVigor);
 }
-
 void UAuraAttributeSet::OnRep_Armor(const FGameplayAttributeData& OldArmor) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , Armor , OldArmor);
 }
-
 void UAuraAttributeSet::OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , ArmorPenetration , OldArmorPenetration);
 }
-
 void UAuraAttributeSet::OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , BlockChance , OldBlockChance);
 }
-
 void UAuraAttributeSet::OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , CriticalHitChance , OldCriticalHitChance);
 }
-
 void UAuraAttributeSet::OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , CriticalHitDamage , OldCriticalHitDamage);
 }
-
 void UAuraAttributeSet::OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , CriticalHitResistance , OldCriticalHitResistance);
 }
-
 void UAuraAttributeSet::OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , HealthRegeneration , OldHealthRegeneration);
 }
-
 void UAuraAttributeSet::OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , ManaRegeneration , OldManaRegeneration);
 }
-
 void UAuraAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , Health , OldHealth);
 }
-
 void UAuraAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , MaxHealth , OldMaxHealth);
 }
-
 void UAuraAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , Mana , OldMana);
 }
-
 void UAuraAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAuraAttributeSet , MaxMana , OldMaxMana);
@@ -167,7 +177,10 @@ void UAuraAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) 
 
 void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
 {
-	// Source: causer of the effect; Target: owner of this AS
+	/**
+	 * Extract useful information from GE and stored in Props
+	 * Source is the creator of the GE , Target is the owner of this AS
+	 */
 	
 	Props.EffectContextHandle = Data.EffectSpec.GetContext();
 	Props.SourceASC = Props.EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();

@@ -7,12 +7,26 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAttributeSet.generated.h"
 
+/**
+ * AS holds every attribute
+ * there are Primary Attribute , Secondary Attributes , Vital Attributes
+ * each Attribute has its own FGameplayAttributeData , Attribute Accessor(Get , Set , Init) , Replication Callback
+ *
+ * main functions:
+ * 1. Attribute Settings (three things mentioned above)
+ * 2. Tag TO Attribute Map , so we can access to correct attribute by gameplay tag
+ * 3. Clamping Vital Attributes , both in PreAttributeChange() and PostGameplayEffectExecute()
+ * 4. Replicate Attributes Change , when attributes change in Server , Client should be notified and do something
+ */
+
+// automatically generate getter , setter , initter for each AS
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+// extract data that GE need
 USTRUCT()
 struct FEffectProperties
 {
@@ -41,6 +55,7 @@ struct FEffectProperties
 	ACharacter* TargetCharacter = nullptr;
 };
 
+// map tag to attribute , so we can easily get Attribute from Tag
 // FAttributeFuncPtr is specific to FGameplayAttribute() , but TStaticFuncPtr is more generic
 // typedef TBaseStaticDelegateInstance<FGameplayAttribute() , FDefaultDelegateUserPolicy>::FFuncPtr FAttributeFuncPtr;
 template<class T>
@@ -53,14 +68,14 @@ class GAS_AURA_API UAuraAttributeSet : public UAttributeSet
 	
 public:
 	UAuraAttributeSet();
+	TMap<FGameplayTag , TStaticFuncPtr<FGameplayAttribute()>> TagToAttribute;
+	
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
-
-	TMap<FGameplayTag , TStaticFuncPtr<FGameplayAttribute()>> TagToAttribute;
 	
-	/* Begin Primary Attributes */
+	/* Primary Attributes Settings Begin */
 	UPROPERTY(BlueprintReadOnly , ReplicatedUsing = Onrep_Strength , Category = "Primary Attributes")
 	FGameplayAttributeData Strength;
 	UFUNCTION()
@@ -84,9 +99,9 @@ public:
 	UFUNCTION()
 	void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , Vigor);
-	/* End Primary Attributes */
+	/* Primary Attributes Settings End */
 
-	/* Begin Secondary Attributes */
+	/* Secondary Attributes Settings Begin */
 	UPROPERTY(BlueprintReadOnly , ReplicatedUsing = Onrep_Armor , Category = "Secondary Attributes")
 	FGameplayAttributeData Armor;
 	UFUNCTION()
@@ -146,9 +161,9 @@ public:
 	UFUNCTION()
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , MaxMana);
-	/* End Secondary Attributes */
+	/* Secondary Attributes Settings End */
 	
-	/* Begin Vital Attributes */
+	/* Vital Attributes Settings Begin */
 	UPROPERTY(BlueprintReadOnly , ReplicatedUsing = Onrep_Health , Category = "Vital Attributes")
 	FGameplayAttributeData Health;
 	UFUNCTION()
@@ -160,7 +175,7 @@ public:
 	UFUNCTION()
 	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , Mana);
-	/* End Vital Attributes */
+	/* Vital Attributes Settings End */
 
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data , FEffectProperties& Props) const;
