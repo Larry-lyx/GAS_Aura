@@ -23,12 +23,16 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+	virtual void Die() override;
+
+	UFUNCTION(NetMulticast , Reliable)
+	virtual void MultiCastHandleDeath();
+
 protected:
 	virtual void BeginPlay() override;
 
 	virtual void InitAbilityActorInfo();
-
-	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 
 	/* Begin Combat */
 	UPROPERTY(EditAnywhere , Category = "Combat")
