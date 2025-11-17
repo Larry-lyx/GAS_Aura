@@ -177,6 +177,12 @@ public:
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , Mana);
 	/* Vital Attributes Settings End */
 
+	/* Meta Attributes Settings Begin */
+	UPROPERTY(BlueprintReadOnly , Category = "Meta Attributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , IncomingDamage);
+	/* Meta Attributes Settings End */
+
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data , FEffectProperties& Props) const;
 };
