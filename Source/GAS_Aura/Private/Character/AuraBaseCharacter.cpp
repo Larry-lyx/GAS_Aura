@@ -40,7 +40,7 @@ void AAuraBaseCharacter::MultiCastHandleDeath_Implementation()
 	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic , ECR_Block);
 
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	
+	Dissolve();
 }
 
 void AAuraBaseCharacter::BeginPlay()
@@ -93,4 +93,20 @@ void AAuraBaseCharacter::AddCharacterAbilities()
 	if (!HasAuthority()) return;
 
 	AuraASC->AddCharacterAbilities(StartupAbilities);
+}
+
+void AAuraBaseCharacter::Dissolve()
+{
+	if (IsValid(DissolveMaterialInstance))
+	{
+		UMaterialInstanceDynamic* DynamicMatIns = UMaterialInstanceDynamic::Create(DissolveMaterialInstance , this);
+		GetMesh()->SetMaterial(0 , DynamicMatIns);
+		StartDissolveTimeline(DynamicMatIns);
+	}
+	if (IsValid(WeaponDissolveMaterialInstance))
+	{
+		UMaterialInstanceDynamic* DynamicMatIns = UMaterialInstanceDynamic::Create(WeaponDissolveMaterialInstance , this);
+		Weapon->SetMaterial(0 , DynamicMatIns);
+		StartWeaponDissolveTimeline(DynamicMatIns);
+	}
 }
