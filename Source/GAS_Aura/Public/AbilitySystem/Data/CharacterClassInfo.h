@@ -21,6 +21,7 @@
  * For Vital Attributes , we simply use instant GE to set the initial value of health and mana
  */
 
+class UGameplayAbility;
 class UGameplayEffect;
 
 UENUM(BlueprintType)
@@ -53,6 +54,8 @@ public:
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
 	UPROPERTY(EditDefaultsOnly , Category = "Common Class Default")
 	TSubclassOf<UGameplayEffect> VitalAttributes;
+	UPROPERTY(EditDefaultsOnly , Category = "Common Class Default")
+	TArray<TSubclassOf<UGameplayAbility>> CommonAbilities;
 
 	FCharacterClassDefaultInfo GetClassDefaultInfo(const ECharacterClass CharacterClass);
 };
