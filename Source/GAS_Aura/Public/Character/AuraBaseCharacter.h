@@ -28,6 +28,8 @@ protected:
 
 	virtual void InitAbilityActorInfo();
 
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+
 	/* Begin Combat */
 	UPROPERTY(EditAnywhere , Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
@@ -64,5 +66,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere , Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
-	
+
+	UPROPERTY(EditAnywhere , Category = "Combat")
+	TObjectPtr<UAnimMontage> HitReactMontage;
 };
