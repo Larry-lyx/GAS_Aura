@@ -19,6 +19,7 @@
  * 3. Initialize Default Attributes for different character class (Enemy)
  */
 
+struct FGameplayEffectContextHandle;
 class UOverlayWidgetController;
 
 UCLASS()
@@ -39,4 +40,13 @@ public:
 	static void GiveStartupAbilities(const UObject* WorldContextObject , UAbilitySystemComponent* ASC);
 	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static bool IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static bool IsCriticalHit(const FGameplayEffectContextHandle& EffectContextHandle);
+	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static void SetIsBlockedHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle , bool bInIsBlockedHit);
+	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle , bool bInIsCriticalHit);
 };
