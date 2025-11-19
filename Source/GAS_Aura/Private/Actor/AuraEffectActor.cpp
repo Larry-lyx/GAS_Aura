@@ -27,6 +27,8 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	 * and remove them when RemoveOnEndOverlap is set and End Overlap
 	 */
 	
+	if (TargetActor->ActorHasTag("Enemy") && !bApplyEffectToEnemies) return;
+	
 	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (TargetASC == nullptr) return;
 	
@@ -41,6 +43,11 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	if (bIsInfinite && InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
 		ActiveEffectHandles.Add(ActiveEffectHandle , TargetASC);
+	}
+
+	if (bDestroyOnEffectApplication && !bIsInfinite)
+	{
+		Destroy();
 	}
 }
 
@@ -70,6 +77,8 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 	 * 1. Apply GE when needed
 	 * 2. Remove GE from ActivateEffects when needed
 	 */
+
+	if (TargetActor->ActorHasTag("Enemy") && !bApplyEffectToEnemies) return;
 	
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 	{
