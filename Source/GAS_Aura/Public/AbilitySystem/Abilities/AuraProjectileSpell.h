@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilitySystem/Abilities/AuraGameplayAbility.h"
+#include "AbilitySystem/Abilities/AuraDamageGameplayAbility.h"
 #include "AuraProjectileSpell.generated.h"
 
 /**
@@ -24,7 +24,7 @@
 class AAuraProjectile;
 
 UCLASS()
-class GAS_AURA_API UAuraProjectileSpell : public UAuraGameplayAbility
+class GAS_AURA_API UAuraProjectileSpell : public UAuraDamageGameplayAbility
 {
 	GENERATED_BODY()
 
@@ -42,9 +42,4 @@ protected:
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
 	/* Spawn Projectile End */
-
-	/* Define GE Begin */
-	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
-	TSubclassOf<UGameplayEffect> DamageEffectClass;
-	/* Define GE End */
 };
