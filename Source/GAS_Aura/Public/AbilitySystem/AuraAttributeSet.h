@@ -162,6 +162,32 @@ public:
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , MaxMana);
 	/* Secondary Attributes Settings End */
+
+	/* Resistance Attributes Settings Begin */
+	UPROPERTY(BlueprintReadOnly , ReplicatedUsing = Onrep_FireResistance , Category = "Resistance Attributes")
+	FGameplayAttributeData FireResistance;
+	UFUNCTION()
+	void OnRep_FireResistance(const FGameplayAttributeData& OldFireResistance) const;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , FireResistance);
+
+	UPROPERTY(BlueprintReadOnly , ReplicatedUsing = Onrep_LightningResistance , Category = "Resistance Attributes")
+	FGameplayAttributeData LightningResistance;
+	UFUNCTION()
+	void OnRep_LightningResistance(const FGameplayAttributeData& OldLightningResistance) const;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , LightningResistance);
+
+	UPROPERTY(BlueprintReadOnly , ReplicatedUsing = Onrep_ArcaneResistance , Category = "Resistance Attributes")
+	FGameplayAttributeData ArcaneResistance;
+	UFUNCTION()
+	void OnRep_ArcaneResistance(const FGameplayAttributeData& OldArcaneResistance) const;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , ArcaneResistance);
+
+	UPROPERTY(BlueprintReadOnly , ReplicatedUsing = Onrep_PhysicalResistance , Category = "Resistance Attributes")
+	FGameplayAttributeData PhysicalResistance;
+	UFUNCTION()
+	void OnRep_PhysicalResistance(const FGameplayAttributeData& OldPhysicalResistance) const;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , PhysicalResistance);
+	/* Resistance Attributes Settings End */
 	
 	/* Vital Attributes Settings Begin */
 	UPROPERTY(BlueprintReadOnly , ReplicatedUsing = Onrep_Health , Category = "Vital Attributes")
