@@ -29,6 +29,9 @@ public:
 	UFUNCTION(NetMulticast , Reliable)
 	virtual void MultiCastHandleDeath();
 
+	UPROPERTY(EditAnywhere , Category = "Combat")
+	TArray<FTaggedMontage> AttackMontages;
+
 protected:
 	bool bDead = false;
 	
@@ -46,6 +49,7 @@ protected:
 	virtual FVector GetCombatSocketLocation_Implementation() override;
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor* GetAvatar_Implementation() override;
+	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
 	/* End Combat */
 
 	/* Begin AbilitySystem */
