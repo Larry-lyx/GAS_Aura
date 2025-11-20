@@ -30,6 +30,8 @@ public:
 	virtual void MultiCastHandleDeath();
 
 protected:
+	bool bDead = false;
+	
 	virtual void BeginPlay() override;
 
 	virtual void InitAbilityActorInfo();
@@ -42,6 +44,8 @@ protected:
 	FName WeaponTipSocketName;
 
 	virtual FVector GetCombatSocketLocation_Implementation() override;
+	virtual bool IsDead_Implementation() const override;
+	virtual AActor* GetAvatar_Implementation() override;
 	/* End Combat */
 
 	/* Begin AbilitySystem */

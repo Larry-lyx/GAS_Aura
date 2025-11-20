@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Data/CharacterClassInfo.h"
+#include "Interaction/CombatInterface.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "AuraAbilitySystemLibrary.generated.h"
@@ -49,4 +50,33 @@ public:
 	static void SetIsBlockedHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle , bool bInIsBlockedHit);
 	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle , bool bInIsCriticalHit);
+
+	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayMechanics")
+	static void GetLivePlayerWithRadius(const UObject* WorldContextObject , TArray<AActor*> &OutOverlappingActors , TArray<AActor*> ActorsToIgnore , float Radius , const FVector& SphereOrigin);
 };
+
+inline void UAuraAbilitySystemLibrary::GetLivePlayerWithRadius(const UObject* WorldContextObject,
+	TArray<AActor*>& OutOverlappingActors, TArray<AActor*> ActorsToIgnore, float Radius, const FVector& SphereOrigin)
+{
+	FCollisionQueryParams SphereParams;
+	SphereParams.AddIgnoredActors(ActorsToIgnore);
+
+	TArray<FOverlapResult> Overlaps;
+	if (const UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject , EGetWorldErrorMode::LogAndReturnNull))
+	{
+		World->OverlapMultiByObjectType(Overlaps ,
+			SphereOrigin ,
+			FQuat::Identity ,
+			FCollisionObjectQueryParams(FCollisionObjectQueryParams::InitType::AllDynamicObjects) ,
+			FCollisionShape::MakeSphere(Radius) , SphereParams
+			);
+
+		for (FOverlapResult Overlap : Overlaps)
+		{
+			if (Overlap.GetActor()->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsDead(Overlap.GetActor()))
+			{
+				OutOverlappingActors.AddUnique(ICombatInterface::Execute_GetAvatar(Overlap.GetActor()));
+			}
+		}
+	}
+}
