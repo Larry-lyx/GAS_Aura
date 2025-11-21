@@ -69,15 +69,15 @@ void AAuraBaseCharacter::Die()
 FVector AAuraBaseCharacter::GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag)
 {
 	FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
-	if (MontageTag.MatchesTag(GameplayTags.Montage_Attack_Weapon) && IsValid(Weapon))
+	if (MontageTag.MatchesTag(GameplayTags.CombatSocket_Weapon) && IsValid(Weapon))
 	{
 		return Weapon->GetSocketLocation(WeaponTipSocketName);
 	}
-	if (MontageTag.MatchesTag(GameplayTags.Montage_Attack_LeftHand))
+	if (MontageTag.MatchesTag(GameplayTags.CombatSocket_LeftHand))
 	{
 		return GetMesh()->GetSocketLocation(LeftHandSocketName);
 	}
-	if (MontageTag.MatchesTag(GameplayTags.Montage_Attack_RightHand))
+	if (MontageTag.MatchesTag(GameplayTags.CombatSocket_RightHand))
 	{
 		return GetMesh()->GetSocketLocation(RightHandSocketName);
 	}
@@ -102,6 +102,18 @@ TArray<FTaggedMontage> AAuraBaseCharacter::GetAttackMontages_Implementation()
 UNiagaraSystem* AAuraBaseCharacter::GetBloodEffect_Implementation()
 {
 	return BloodEffect;
+}
+
+FTaggedMontage AAuraBaseCharacter::GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag)
+{
+	for (FTaggedMontage TaggedMontage : AttackMontages)
+	{
+		if (TaggedMontage.MontageTag == MontageTag)
+		{
+			return TaggedMontage;
+		}
+	}
+	return FTaggedMontage();
 }
 
 void AAuraBaseCharacter::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
