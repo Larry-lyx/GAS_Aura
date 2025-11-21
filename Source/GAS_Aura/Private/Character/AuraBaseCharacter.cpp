@@ -99,6 +99,11 @@ TArray<FTaggedMontage> AAuraBaseCharacter::GetAttackMontages_Implementation()
 	return AttackMontages;
 }
 
+UNiagaraSystem* AAuraBaseCharacter::GetBloodEffect_Implementation()
+{
+	return BloodEffect;
+}
+
 void AAuraBaseCharacter::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
 {
 	check(IsValid(GetAbilitySystemComponent()));
