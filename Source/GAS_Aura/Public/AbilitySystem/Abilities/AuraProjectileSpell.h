@@ -37,7 +37,7 @@ protected:
 	
 	// SpawnProjectile in Blueprint , because we want to spawn projectile when received notify from montage
 	UFUNCTION(BlueprintCallable , Category = "Projectile")
-	void SpawnProjectile(const FVector& ProjectileTargetLocation);
+	void SpawnProjectile(const FVector& ProjectileTargetLocation , const FGameplayTag& SocketTag);
 	
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;

@@ -15,7 +15,7 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 	
 }
 
-void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
+void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation , const FGameplayTag& SocketTag)
 {
 	/**
 	 * This function is usually called in Blueprint
@@ -35,7 +35,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 	{
 		const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 			GetAvatarActorFromActorInfo() ,
-			FAuraGameplayTags::Get().CombatSocket_Weapon
+			SocketTag
 			);
 		FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
 
