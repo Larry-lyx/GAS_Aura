@@ -48,6 +48,11 @@ void AAuraBaseCharacter::MultiCastHandleDeath_Implementation()
 	bDead = true;
 }
 
+int32 AAuraBaseCharacter::GetMinionCount_Implementation()
+{
+	return MinionCount;
+}
+
 void AAuraBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();

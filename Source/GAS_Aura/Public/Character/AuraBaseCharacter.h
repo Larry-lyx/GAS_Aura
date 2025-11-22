@@ -32,6 +32,9 @@ public:
 	UPROPERTY(EditAnywhere , Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
 
+	int32 MinionCount;
+	virtual int32 GetMinionCount_Implementation() override;
+
 protected:
 	bool bDead = false;
 	
