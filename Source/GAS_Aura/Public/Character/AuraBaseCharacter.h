@@ -35,6 +35,8 @@ public:
 	int32 MinionCount;
 	virtual int32 GetMinionCount_Implementation() override;
 
+	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
+
 protected:
 	bool bDead = false;
 	
