@@ -7,6 +7,7 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "OverlayWidgetController.generated.h"
 
+class UAuraAbilitySystemComponent;
 class UAbilityInfo;
 class UAuraUserWidget;
 struct FGameplayTag;
@@ -60,6 +61,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly , Category = "Widget Data")
 	TObjectPtr<UAbilityInfo> AbilityInfo;
+
+	void OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraASC);
 	
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable , const FGameplayTag& Tag ) const;

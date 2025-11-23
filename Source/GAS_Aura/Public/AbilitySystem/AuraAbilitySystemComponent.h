@@ -17,7 +17,10 @@
  * Almost all of the functions in GAS should be called through ASC
  */
 
+class UAuraAbilitySystemComponent;
+
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags , const FGameplayTagContainer& /* Asset Tags */);
+DECLARE_MULTICAST_DELEGATE_OneParam(FAbilityGiven , UAuraAbilitySystemComponent*);
 
 UCLASS()
 class GAS_AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -28,6 +31,9 @@ public:
 	void AbilityActorInfoSet();
 
 	FEffectAssetTags EffectAssetTags;
+	FAbilityGiven AbilityGivenDelegate;
+
+	bool bStartupAbilityGiven;
 
 	/* Give & Activate & Release Ability Begin */
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
