@@ -1,0 +1,25 @@
+// Copyright GAS Aura Course
+
+
+#include "AbilitySystem/Data/LevelUpInfo.h"
+
+int32 ULevelUpInfo::FindLevelForXP(int32 XP) const
+{
+	int32 Level = 1;
+	bool bSearching = false;
+	while (bSearching)
+	{
+		// LevelUpInformation[0] is not used , LevelUpInformation[1] is Level 1 's Information
+		if (LevelUpInformation.Num() - 1 <= Level) return Level;
+
+		if (XP >= LevelUpInformation[Level].LevelUpRequirement)
+		{
+			Level++;
+		}
+		else
+		{
+			bSearching = false;
+		}
+	}
+	return Level;
+}
