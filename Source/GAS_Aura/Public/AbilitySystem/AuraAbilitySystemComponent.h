@@ -21,6 +21,7 @@ class UAuraAbilitySystemComponent;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags , const FGameplayTagContainer& /* Asset Tags */);
 DECLARE_MULTICAST_DELEGATE_OneParam(FAbilityGiven , UAuraAbilitySystemComponent*);
+DECLARE_DELEGATE_OneParam(FForEachAbility , const FGameplayAbilitySpec&);
 
 UCLASS()
 class GAS_AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -34,6 +35,11 @@ public:
 	FAbilityGiven AbilityGivenDelegate;
 
 	bool bStartupAbilityGiven;
+
+	void ForEachAbility(const FForEachAbility& Delegate);
+
+	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
+	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
 
 	/* Give & Activate & Release Ability Begin */
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
