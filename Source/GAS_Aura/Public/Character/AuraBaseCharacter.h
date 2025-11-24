@@ -37,12 +37,17 @@ public:
 
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 
+	virtual ECharacterClass GetCharacterClass_Implementation() override;
+
 protected:
 	bool bDead = false;
 	
 	virtual void BeginPlay() override;
 
 	virtual void InitAbilityActorInfo();
+
+	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Character Class Defaults")
+	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 
 	/* Begin Combat */
 	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Combat")
