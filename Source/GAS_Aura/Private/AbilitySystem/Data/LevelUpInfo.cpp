@@ -6,7 +6,7 @@
 int32 ULevelUpInfo::FindLevelForXP(int32 XP) const
 {
 	int32 Level = 1;
-	bool bSearching = false;
+	bool bSearching = true;
 	while (bSearching)
 	{
 		// LevelUpInformation[0] is not used , LevelUpInformation[1] is Level 1 's Information
