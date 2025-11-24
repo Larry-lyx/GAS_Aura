@@ -161,10 +161,10 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 void UAuraAttributeSet::SendXPEvent(const FEffectProperties& Props)
 {
-	if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetCharacter))
+	if (Props.TargetCharacter->Implements<UCombatInterface>())
 	{
-		const int32 CharacterLevel = CombatInterface->GetPlayerLevel();
-		const ECharacterClass CharacterClass = CombatInterface->Execute_GetCharacterClass(Props.TargetCharacter);
+		const int32 CharacterLevel = ICombatInterface::Execute_GetPlayerLevel(Props.TargetCharacter);
+		const ECharacterClass CharacterClass = ICombatInterface::Execute_GetCharacterClass(Props.TargetCharacter);
 		const int32 XPReward = UAuraAbilitySystemLibrary::GetXPRewardForClassAndLevel(Props.TargetCharacter , CharacterClass , CharacterLevel);
 
 		const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
