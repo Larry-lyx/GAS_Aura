@@ -8,20 +8,20 @@
 /*
  * Aura Gameplay Tags
  *
- * Singleton: There’s only one instance in the whole project. 
- * - Static members are tied to the class itself; non-static members belong to this unique instance (not arbitrary objects).
- * - Access rules: Static members -> FAuraGameplayTags::MemberName; Instance members -> FAuraGameplayTags::Get().MemberName.
- * - Accessible throughout the project (the instance lives for the entire program lifecycle).
+ * Singleton: There’s only one instance in the whole project
+ * - Static members are tied to the class itself; non-static members belong to this unique instance (not arbitrary objects)
+ * - Access rules: Static members -> FAuraGameplayTags::MemberName; Instance members -> FAuraGameplayTags::Get().MemberName
+ * - Accessible throughout the project (the instance lives for the entire program lifecycle)
  *
  * Common steps to create a singleton:
- * 1. Declare a static instance in the private section (prevent external access).
- * 2. Define this unique instance in the .cpp file.
- * 3. Add a public static Getter (FAuraGameplayTags::Get()) for global access.
+ * 1. Declare a static instance in the private section (prevent external access)
+ * 2. Define this unique instance in the .cpp file
+ * 3. Add a public static Getter (FAuraGameplayTags::Get()) for global access
  *
  * Native Gameplay Tags:
- * - "Native" means defined in C++ (core tags, different from blueprint-defined tags).
- * - Custom Native Gameplay Tags must be added to the UE Engine (via AssetManager) by calling the initialization function.
- * - Role: Markers during gameplay—they indicate which properties we’re dealing with or what state an object is in.
+ * - "Native" means defined in C++ (core tags, different from blueprint-defined tags)
+ * - Custom Native Gameplay Tags must be added to the UE Engine (via AssetManager) by calling the initialization function
+ * - Role: Markers during gameplay—they indicate which properties we’re dealing with or what state an object is in
  */
 
 struct  FAuraGameplayTags

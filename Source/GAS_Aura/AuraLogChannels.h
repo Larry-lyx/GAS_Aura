@@ -8,7 +8,7 @@
 /**
  * Custom Log Channel for this project
  * 
- * declare in .h , define in .cpp
+ * Declare in .h , Define in .cpp
  */
 
 DECLARE_LOG_CATEGORY_EXTERN(LogAura, Log, All);

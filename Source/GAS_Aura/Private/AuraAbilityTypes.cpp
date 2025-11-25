@@ -2,6 +2,18 @@
 
 bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)
 {
+	/**
+	 * Tells Unreal Engine how to serialize (package) and deserialize (unpackage) data
+	 * for network sync
+	 * 
+	 * - Ar: Container that holds data being sent (from sender) or received (by receiver)
+	 * - RepBits: Flags to mark if specific data is valid and needs replication
+	 * 
+	 * How It Works:
+	 * 1. Sender (e.g., Server): Packs valid data into Ar, then sets RepBits to mark which data is included
+	 * 2. Receiver (e.g., Client): First gets RepBits, then unpacks only the marked data from Ar
+	 */
+	
 	uint32 RepBits = 0;
 	if (Ar.IsSaving())
 	{
@@ -96,7 +108,8 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, class UPackageMap* M
 
 	if (Ar.IsLoading())
 	{
-		AddInstigator(Instigator.Get(), EffectCauser.Get()); // Just to initialize InstigatorAbilitySystemComponent
+		// Just to initialize InstigatorAbilitySystemComponent
+		AddInstigator(Instigator.Get(), EffectCauser.Get());
 	}	
 	
 	bOutSuccess = true;

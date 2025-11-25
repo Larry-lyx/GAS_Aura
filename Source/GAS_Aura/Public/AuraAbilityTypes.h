@@ -5,7 +5,19 @@
 #include "GameplayEffectTypes.h"
 #include "AuraAbilityTypes.generated.h"
 
-USTRUCT(blueprintType)
+/**
+ * Aura Ability Types
+ * 
+ * FAuraGameplayEffectContext: Custom GE Context
+ * - Adds hit type information: Blocked Hits and Critical Hits
+ * 
+ * Steps to create a Custom GE Context:
+ * 1. Override GetScriptStruct() -> Tell Unreal Engine the structure of this custom GE Context
+ * 2. Override Duplicate() -> Make a copy of this custom GE Context (required to create new instances)
+ * 3. Override NetSerialize() -> Tell Unreal Engine how to replicate (sync over network) this custom GE Context
+ */
+
+USTRUCT(BlueprintType)
 struct FAuraGameplayEffectContext : public FGameplayEffectContext
 {
 	GENERATED_BODY()
@@ -17,14 +29,17 @@ public:
 	void SetBlockedHit(bool bInIsBlockedHit) {bIsBlockedHit = bInIsBlockedHit;}
 	void SetCriticalHit(bool bInIsCriticalHit) {bIsCriticalHit = bInIsCriticalHit;}
 	
-	virtual UScriptStruct* GetScriptStruct() const
+	virtual UScriptStruct* GetScriptStruct() const override
 	{
 		return StaticStruct();
 	}
-
-	/** Creates a copy of this context, used to duplicate for later modifications */
-	virtual FAuraGameplayEffectContext* Duplicate() const
+	
+	virtual FAuraGameplayEffectContext* Duplicate() const override
 	{
+		/**
+		 * Creates a copy of this context, used to duplicate for later modifications
+		 */
+		
 		FAuraGameplayEffectContext* NewContext = new FAuraGameplayEffectContext();
 		*NewContext = *this;
 		if (GetHitResult())
@@ -35,7 +50,7 @@ public:
 		return NewContext;
 	}
 	
-	virtual bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess);
+	virtual bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess) override;
 
 protected:
 	UPROPERTY()
@@ -45,6 +60,9 @@ protected:
 	bool bIsCriticalHit = false;
 };
 
+/**
+ * Tell UE the functions this struct supports
+ */
 template<>
 struct TStructOpsTypeTraits<FAuraGameplayEffectContext> : public TStructOpsTypeTraitsBase2<FAuraGameplayEffectContext>
 {
