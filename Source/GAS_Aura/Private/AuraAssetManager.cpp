@@ -18,5 +18,6 @@ void UAuraAssetManager::StartInitialLoading()
 	Super::StartInitialLoading();
 
 	FAuraGameplayTags::InitializeNativeGameplayTags();
+	// Initialize Global Data for GAS
 	UAbilitySystemGlobals::Get().InitGlobalData();
 }

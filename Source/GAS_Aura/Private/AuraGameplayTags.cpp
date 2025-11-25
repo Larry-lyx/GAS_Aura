@@ -2,13 +2,16 @@
 
 
 #include "AuraGameplayTags.h"
-
 #include "GameplayTagsManager.h"
 
 FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 
 void FAuraGameplayTags::InitializeNativeGameplayTags()
 {
+	/*
+	 * Add Custom Native Gameplay Tags to UE Engine
+	 */
+	
 	// Primary Attributes
 	GameplayTags.Attributes_Primary_Strength = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Primary.Strength") ,
@@ -101,7 +104,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FString("Input Tag for 4 key")
 		);
 
-	// Damage Types
+	// Damage
 	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Damage") ,
 		FString("Damage")
