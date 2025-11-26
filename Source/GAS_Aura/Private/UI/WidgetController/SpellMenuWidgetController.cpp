@@ -5,7 +5,7 @@
 
 void USpellMenuWidgetController::BroadcastInitValues()
 {
-	
+	BroadCastAbilityInfo();
 }
 
 void USpellMenuWidgetController::BindCallbacksToDependencies()
