@@ -40,6 +40,7 @@ public:
 
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
+	static FGameplayTag GetStatusTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
 
 	/* Give & Activate & Release Ability Begin */
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
