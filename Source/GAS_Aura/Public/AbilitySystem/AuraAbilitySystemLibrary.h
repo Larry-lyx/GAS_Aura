@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Data/CharacterClassInfo.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
 /**
@@ -19,8 +18,11 @@
  * 3. Initialize Default Attributes for different character class (Enemy)
  */
 
+class AAuraHUD;
+class USpellMenuWidgetController;
 struct FGameplayEffectContextHandle;
 class UOverlayWidgetController;
+struct FWidgetControllerParams;
 
 UCLASS()
 class GAS_AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
@@ -29,10 +31,15 @@ class GAS_AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 
 public:
 	// pure means just get , doesn't change anything
-	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|WidgetController")
+	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|WidgetController" , meta=(DefaultToSelf = "WorldContextObject"))
+	static bool MakeWidgetControllerParams(const UObject* WorldContextObject , FWidgetControllerParams& OutWidgetControllerParams , AAuraHUD*& OutAuraHUD);
+	
+	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|WidgetController", meta=(DefaultToSelf = "WorldContextObject"))
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
-	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|WidgetController")
+	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|WidgetController", meta=(DefaultToSelf = "WorldContextObject"))
 	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|WidgetController", meta=(DefaultToSelf = "WorldContextObject"))
+	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
 	static void InitializeDefaultAttributes(const UObject* WorldContextObject , ECharacterClass CharacterClass , float Level , UAbilitySystemComponent* ASC);
