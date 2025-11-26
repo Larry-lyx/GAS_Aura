@@ -18,10 +18,12 @@
  */
 
 class UAuraAbilitySystemComponent;
+struct FGameplayTag;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags , const FGameplayTagContainer& /* Asset Tags */);
 DECLARE_MULTICAST_DELEGATE(FAbilityGiven);
 DECLARE_DELEGATE_OneParam(FForEachAbility , const FGameplayAbilitySpec&);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FAbilityStatusChanged , const FGameplayTag& /* Ability Tag */ , const FGameplayTag& /* Status Tag */);
 
 UCLASS()
 class GAS_AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -33,6 +35,7 @@ public:
 
 	FEffectAssetTags EffectAssetTags;
 	FAbilityGiven AbilityGivenDelegate;
+	FAbilityStatusChanged AbilityStatusChanged;
 
 	bool bStartupAbilityGiven;
 
@@ -63,4 +66,7 @@ protected:
 	
 	UFUNCTION(Client , Reliable)
 	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent , const FGameplayEffectSpec& EffectSpec , FActiveGameplayEffectHandle ActiveEffectHandle);
+
+	UFUNCTION(Client , Reliable)
+	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag , const FGameplayTag& StatusTag);
 };
