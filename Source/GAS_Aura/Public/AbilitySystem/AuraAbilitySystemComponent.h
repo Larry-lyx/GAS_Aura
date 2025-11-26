@@ -14,7 +14,7 @@
  * 2. Give , Activate and Release GA
  *
  * Basically , ASC hold every information we need in GAS
- * Almost all of the functions in GAS should be called through ASC
+ * Almost all the functions in GAS should be called through ASC
  */
 
 class UAuraAbilitySystemComponent;
@@ -42,6 +42,8 @@ public:
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
 	static FGameplayTag GetStatusTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
 
+	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
+
 	/* Give & Activate & Release Ability Begin */
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilities);
@@ -53,6 +55,8 @@ public:
 
 	UFUNCTION(Server , Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
+
+	void UpdateAbilityStatus(int32 Level);
 	
 protected:
 	virtual void OnRep_ActivateAbilities() override;
