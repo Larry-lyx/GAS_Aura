@@ -20,7 +20,7 @@ struct FSelectedAbility
 	FGameplayTag Status = FGameplayTag();
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSpellGlobeSelectedSignature, bool , bSpendPointButtonEnabled , bool , bEquipButtonEnabled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FSpellGlobeSelectedSignature, bool , bSpendPointButtonEnabled , bool , bEquipButtonEnabled , FString , Description , FString , NextLevelDescription);
 
 UCLASS(BlueprintType, Blueprintable)
 class GAS_AURA_API USpellMenuWidgetController : public UAuraWidgetController
