@@ -28,6 +28,10 @@ class GAS_AURA_API UAuraProjectileSpell : public UAuraDamageGameplayAbility
 {
 	GENERATED_BODY()
 
+public:
+	virtual  FString GetDescription(int32 Level) override;
+	virtual  FString GetNextLevelDescription(int32 Level) override;
+	
 protected:
 	/* Activate Ability Begin */
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
@@ -42,4 +46,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly , BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
 	/* Spawn Projectile End */
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 NumProjectiles = 5;
 };
