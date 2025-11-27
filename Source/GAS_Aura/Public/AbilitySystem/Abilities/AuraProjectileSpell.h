@@ -27,10 +27,6 @@ UCLASS()
 class GAS_AURA_API UAuraProjectileSpell : public UAuraDamageGameplayAbility
 {
 	GENERATED_BODY()
-
-public:
-	virtual  FString GetDescription(int32 Level) override;
-	virtual  FString GetNextLevelDescription(int32 Level) override;
 	
 protected:
 	/* Activate Ability Begin */

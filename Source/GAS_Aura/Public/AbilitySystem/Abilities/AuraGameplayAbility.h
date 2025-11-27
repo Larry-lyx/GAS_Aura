@@ -19,6 +19,7 @@
  * after granted , we can access the Character using this GA
  * by using 'GetAvatarActorFromActorInfo()'
  */
+
 UCLASS()
 class GAS_AURA_API UAuraGameplayAbility : public UGameplayAbility
 {
@@ -31,4 +32,9 @@ public:
 	virtual FString GetDescription(int32 Level);
 	virtual FString GetNextLevelDescription(int32 Level);
 	static FString GetLockedDescription(int32 Level);
+
+protected:
+	float GetManaCost(float InLevel = 1.f) const;
+	float GetCooldown(float InLevel = 1.f) const;
+	
 };
