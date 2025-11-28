@@ -24,6 +24,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags , const FGameplayTagContain
 DECLARE_MULTICAST_DELEGATE(FAbilityGiven);
 DECLARE_DELEGATE_OneParam(FForEachAbility , const FGameplayAbilitySpec&);
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged , const FGameplayTag& /* Ability Tag */ , const FGameplayTag& /* Status Tag */ , int32 /* Ability Level */);
+DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped , const FGameplayTag& /* AbilityTag */ , const FGameplayTag& /* Status */ , const FGameplayTag& /* Slot */ , const FGameplayTag& /* Previous Slot */);
 
 UCLASS()
 class GAS_AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -36,6 +37,7 @@ public:
 	FEffectAssetTags EffectAssetTags;
 	FAbilityGiven AbilityGivenDelegate;
 	FAbilityStatusChanged AbilityStatusChanged;
+	FAbilityEquipped AbilityEquipped;
 
 	bool bStartupAbilityGiven;
 
@@ -44,6 +46,9 @@ public:
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
 	static FGameplayTag GetStatusTagFromSpec(const FGameplayAbilitySpec& GameplayAbilitySpec);
+
+	FGameplayTag GetStatusFromAbilityTag(const FGameplayTag& AbilityTag);
+	FGameplayTag GetInputTagFromAbilityTag(const FGameplayTag& AbilityTag);
 
 	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag);
 
@@ -63,6 +68,15 @@ public:
 
 	UFUNCTION(Server , Reliable)
 	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);
+
+	UFUNCTION(Server , Reliable)
+	void ServerEquipAbility(const FGameplayTag& AbilityTag , const FGameplayTag& Slot);
+
+	void ClientEquipAbility(const FGameplayTag& AbilityTag , const FGameplayTag& Status , const FGameplayTag& Slot , const FGameplayTag& PreviousSlot);
+
+	void ClearSlot(FGameplayAbilitySpec* Spec);
+	void ClearAbilityOfSlot(const FGameplayTag& Slot);
+	static bool AbilityHasSlot(FGameplayAbilitySpec* Spec , const FGameplayTag& Slot);
 
 	bool GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag , FString& OutDescription , FString& OutNextLevelDescription);
 	
