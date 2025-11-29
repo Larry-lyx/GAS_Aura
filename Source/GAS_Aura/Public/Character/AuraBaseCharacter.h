@@ -8,6 +8,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraBaseCharacter.generated.h"
 
+class UDebuffNiagaraComponent;
 class UGameplayAbility;
 class UGameplayEffect;
 class UAbilitySystemComponent;
@@ -38,6 +39,14 @@ public:
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
+
+	FOnASCRegistered OnASCRegistered;
+	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override;
+	FOnDeath OnDeath;
+	virtual FOnDeath& GetOnDeathDelegate() override;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
 
 protected:
 	bool bDead = false;

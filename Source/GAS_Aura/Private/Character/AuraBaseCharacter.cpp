@@ -5,6 +5,7 @@
 #include "AbilitySystemComponent.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GAS_Aura/GAS_Aura.h"
 #include "Kismet/GameplayStatics.h"
@@ -23,6 +24,10 @@ AAuraBaseCharacter::AAuraBaseCharacter()
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh() , FName("WeaponHandSocket"));
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	BurnDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("BurnDebuffComponent");
+	BurnDebuffComponent->SetupAttachment(GetRootComponent());
+	BurnDebuffComponent->DebuffTag = FAuraGameplayTags::Get().Debuff_Burn;
 }
 
 UAbilitySystemComponent* AAuraBaseCharacter::GetAbilitySystemComponent() const
@@ -46,6 +51,8 @@ void AAuraBaseCharacter::MultiCastHandleDeath_Implementation()
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Dissolve();
 	bDead = true;
+
+	OnDeath.Broadcast(this);
 }
 
 int32 AAuraBaseCharacter::GetMinionCount_Implementation()
@@ -61,6 +68,16 @@ void AAuraBaseCharacter::IncrementMinionCount_Implementation(int32 Amount)
 ECharacterClass AAuraBaseCharacter::GetCharacterClass_Implementation()
 {
 	return CharacterClass;
+}
+
+FOnASCRegistered AAuraBaseCharacter::GetOnASCRegisteredDelegate()
+{
+	return OnASCRegistered;
+}
+
+FOnDeath& AAuraBaseCharacter::GetOnDeathDelegate()
+{
+	return OnDeath;
 }
 
 void AAuraBaseCharacter::BeginPlay()
