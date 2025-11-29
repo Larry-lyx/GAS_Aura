@@ -161,11 +161,11 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("Debuff.Stun") ,
 		FString("Debuff for lightning damage")
 		);
-	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	GameplayTags.Debuff_Arcane = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Debuff.Arcane") ,
 		FString("Debuff for arcane damage")
 		);
-	GameplayTags.Debuff_Burn = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	GameplayTags.Debuff_Physical = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Debuff.Physical") ,
 		FString("Debuff for physical damage")
 		);

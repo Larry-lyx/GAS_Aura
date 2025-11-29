@@ -25,10 +25,10 @@ public:
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
-	virtual void Die() override;
+	virtual void Die(const FVector& DeathImpulse) override;
 
 	UFUNCTION(NetMulticast , Reliable)
-	virtual void MultiCastHandleDeath();
+	virtual void MultiCastHandleDeath(const FVector& DeathImpulse);
 
 	UPROPERTY(EditAnywhere , Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;

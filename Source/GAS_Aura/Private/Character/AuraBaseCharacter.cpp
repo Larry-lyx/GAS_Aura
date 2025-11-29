@@ -35,18 +35,20 @@ UAbilitySystemComponent* AAuraBaseCharacter::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
-void AAuraBaseCharacter::MultiCastHandleDeath_Implementation()
+void AAuraBaseCharacter::MultiCastHandleDeath_Implementation(const FVector& DeathImpulse)
 {
 	UGameplayStatics::PlaySoundAtLocation(this , DeathSound , GetActorLocation() , GetActorRotation());
 	
 	Weapon->SetSimulatePhysics(true);
 	Weapon->SetEnableGravity(true);
 	Weapon->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	Weapon->AddImpulse(DeathImpulse * 0.1f, NAME_None , true);
 
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetEnableGravity(true);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic , ECR_Block);
+	GetMesh()->AddImpulse(DeathImpulse , NAME_None , true);
 
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Dissolve();
@@ -95,10 +97,10 @@ UAnimMontage* AAuraBaseCharacter::GetHitReactMontage_Implementation()
 	return HitReactMontage;
 }
 
-void AAuraBaseCharacter::Die()
+void AAuraBaseCharacter::Die(const FVector& DeathImpulse)
 {
 	Weapon->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld , true ));
-	MultiCastHandleDeath();
+	MultiCastHandleDeath(DeathImpulse);
 }
 
 FVector AAuraBaseCharacter::GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag)
