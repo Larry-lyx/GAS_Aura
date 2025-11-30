@@ -72,6 +72,11 @@ ECharacterClass AAuraBaseCharacter::GetCharacterClass_Implementation()
 	return CharacterClass;
 }
 
+USkeletalMeshComponent* AAuraBaseCharacter::GetWeapon_Implementation()
+{
+	return Weapon;
+}
+
 FOnASCRegistered AAuraBaseCharacter::GetOnASCRegisteredDelegate()
 {
 	return OnASCRegistered;
