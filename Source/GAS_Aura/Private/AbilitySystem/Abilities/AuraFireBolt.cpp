@@ -2,8 +2,9 @@
 
 
 #include "AbilitySystem/Abilities/AuraFireBolt.h"
-
-#include "Kismet/KismetSystemLibrary.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
+#include "Actor/AuraProjectile.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 FString UAuraFireBolt::GetDescription(int32 Level)
 {
@@ -86,23 +87,38 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 	}
 
 	const FVector Forward = Rotation.Vector();
-	const FVector LeftOfSpread = Forward.RotateAngleAxis(- ProjectileSpread / 2.f , FVector::UpVector);
-	
-	// NumProjectiles = FMath::Min(MaxNumProjectile , GetAbilityLevel());
-	if (NumProjectiles > 1)
+	const int32 EffectiveNumProjectiles = FMath::Min(NumProjectiles , GetAbilityLevel());
+	TArray<FRotator> Rotators = UAuraAbilitySystemLibrary::EvenlySpacedRotators(Forward , FVector::UpVector , ProjectileSpread , EffectiveNumProjectiles );
+
+	for (const FRotator& Rotator : Rotators)
 	{
-		const float DeltaSpread = ProjectileSpread / (NumProjectiles - 1);
-		for (int32 i = 0; i < NumProjectiles; i++)
-		{
-			const FVector Direction = LeftOfSpread.RotateAngleAxis(i * DeltaSpread, FVector::UpVector);
-			UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo() , SocketLocation , SocketLocation + Direction * 75.f , 2 , FColor::Red , 120.f , 2.f );
-		}
-	}
-	else
-	{
+		FTransform SpawnTransform;
+		SpawnTransform.SetLocation(SocketLocation);
+		SpawnTransform.SetRotation(Rotator.Quaternion());
 		
+		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(
+			ProjectileClass ,
+			SpawnTransform ,
+			GetOwningActorFromActorInfo() ,
+			Cast<APawn>(GetOwningActorFromActorInfo()) ,
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+
+		Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
+
+		if (HomingTarget && HomingTarget->Implements<UCombatInterface>())
+		{
+			Projectile->ProjectileMovement->HomingTargetComponent = HomingTarget->GetRootComponent();
+		}
+		else
+		{
+			Projectile->HomingTargetSceneComponent = NewObject<USceneComponent>(USceneComponent::StaticClass());
+			Projectile->HomingTargetSceneComponent->SetWorldLocation(ProjectileTargetLocation);
+			Projectile->ProjectileMovement->HomingTargetComponent = Projectile->HomingTargetSceneComponent;
+		}
+
+		Projectile->ProjectileMovement->HomingAccelerationMagnitude = FMath::RandRange(HomingAccelerationMin, HomingAccelerationMax);
+		Projectile->ProjectileMovement->bIsHomingProjectile = bLaunchHomingProjectile;
+		
+		Projectile->FinishSpawning(SpawnTransform);
 	}
-
-
-	UKismetSystemLibrary::DrawDebugArrow(GetAvatarActorFromActorInfo() , SocketLocation , SocketLocation + Forward * 100.f , 2 , FColor::White , 120.f , 2.f );
 }

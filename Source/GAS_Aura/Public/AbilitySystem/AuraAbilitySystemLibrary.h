@@ -97,7 +97,11 @@ public:
 	static void GetLivePlayerWithRadius(const UObject* WorldContextObject , TArray<AActor*> &OutOverlappingActors , TArray<AActor*> ActorsToIgnore , float Radius , const FVector& SphereOrigin);
 	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|GameplayMechanics")
 	static bool IsNotFriend(AActor* FirstActor , AActor* SecondActor);
-
+	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|GameplayMechanics")
+	static TArray<FRotator> EvenlySpacedRotators(const FVector& Forward , const FVector& Axis , float Spread , int32 NumRotators);
+	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|GameplayMechanics")
+	static TArray<FVector> EvenlyRotatedVectors(const FVector& Forward , const FVector& Axis , float Spread , int32 NumRotators);
+ 
 	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|DamageEffects")
 	static FGameplayEffectContextHandle ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams);
 	

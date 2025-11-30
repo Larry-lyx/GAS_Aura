@@ -332,6 +332,46 @@ bool UAuraAbilitySystemLibrary::IsNotFriend(AActor* FirstActor, AActor* SecondAc
 	return !bFriends;
 }
 
+TArray<FRotator> UAuraAbilitySystemLibrary::EvenlySpacedRotators(const FVector& Forward, const FVector& Axis , float Spread, int32 NumRotators)
+{
+	TArray<FRotator> Rotators;
+	const FVector LeftOfSpread = Forward.RotateAngleAxis(- Spread / 2.f , Axis);
+	const float DeltaSpread = Spread / (NumRotators - 1);
+	if (NumRotators >1)
+	{
+		for (int32 i = 0; i < NumRotators; i++)
+		{
+			const FVector Direction = LeftOfSpread.RotateAngleAxis(i * DeltaSpread, Axis);
+			Rotators.Add(Direction.Rotation());
+		}
+	}
+	else
+	{
+		Rotators.Add(Forward.Rotation());
+	}
+	return Rotators;
+}
+
+TArray<FVector> UAuraAbilitySystemLibrary::EvenlyRotatedVectors(const FVector& Forward, const FVector& Axis , float Spread, int32 NumRotators)
+{
+	TArray<FVector> Vectors;
+	const FVector LeftOfSpread = Forward.RotateAngleAxis(- Spread / 2.f , Axis);
+	const float DeltaSpread = Spread / (NumRotators - 1);
+	if (NumRotators >1)
+	{
+		for (int32 i = 0; i < NumRotators; i++)
+		{
+			const FVector Direction = LeftOfSpread.RotateAngleAxis(i * DeltaSpread, Axis);
+			Vectors.Add(Direction);
+		}
+	}
+	else
+	{
+		Vectors.Add(Forward);
+	}
+	return Vectors;
+}
+
 FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams)
 {
 	const FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
