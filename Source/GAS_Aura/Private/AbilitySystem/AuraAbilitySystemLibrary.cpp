@@ -332,6 +332,41 @@ bool UAuraAbilitySystemLibrary::IsNotFriend(AActor* FirstActor, AActor* SecondAc
 	return !bFriends;
 }
 
+void UAuraAbilitySystemLibrary::GetClosestTargets(int32 MaxTargets, TArray<AActor*>& Actors,
+	TArray<AActor*>& OutTargets, const FVector& Origin)
+{
+	if (Actors.Num() <= MaxTargets)
+	{
+		OutTargets = Actors;
+		return;
+	}
+
+	TArray<AActor*> ActorsToCheck = Actors;
+	int32 NumTargetedFound = 0;
+
+	while (NumTargetedFound < MaxTargets)
+	{
+		if (ActorsToCheck.Num() == 0) break;
+
+		double ClosestDistance = TNumericLimits<double>::Max();
+		AActor* ClosestActor;
+		
+		for (AActor* Actor : ActorsToCheck)
+		{
+			const double Distance = (Actor->GetActorLocation() - Origin).Length();
+			if (Distance < ClosestDistance)
+			{
+				ClosestDistance = Distance;
+				ClosestActor = Actor;
+			}
+		}
+
+		ActorsToCheck.Remove(ClosestActor);
+		OutTargets.Add(ClosestActor);
+		NumTargetedFound++;
+	}
+}
+
 TArray<FRotator> UAuraAbilitySystemLibrary::EvenlySpacedRotators(const FVector& Forward, const FVector& Axis , float Spread, int32 NumRotators)
 {
 	TArray<FRotator> Rotators;
