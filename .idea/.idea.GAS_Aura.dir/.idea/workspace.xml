@@ -7,18 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c1070e44-1b1f-4811-b21b-8918ea5ad72b" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GAS_Aura.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GAS_Aura.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/AbilitySystem/Data/CT_Cost.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/AbilitySystem/Data/CT_Cost.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/AbilitySystem/GameplayAbilities/Aura/Fire/FireBolt/BP_FireBolt.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/AbilitySystem/GameplayAbilities/Aura/Fire/FireBolt/BP_FireBolt.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/AbilitySystem/GameplayAbilities/Aura/Fire/FireBolt/GA_FireBolt.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/AbilitySystem/GameplayAbilities/Aura/Fire/FireBolt/GA_FireBolt.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_Aura/Private/AbilitySystem/Abilities/AuraFireBolt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_Aura/Private/AbilitySystem/Abilities/AuraFireBolt.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_Aura/Private/AbilitySystem/Abilities/AuraProjectileSpell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_Aura/Private/AbilitySystem/Abilities/AuraProjectileSpell.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_Aura/Private/AbilitySystem/AuraAbilitySystemLibrary.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_Aura/Private/AbilitySystem/AuraAbilitySystemLibrary.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_Aura/Public/AbilitySystem/Abilities/AuraFireBolt.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_Aura/Public/AbilitySystem/Abilities/AuraFireBolt.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_Aura/Public/AbilitySystem/AuraAbilitySystemLibrary.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_Aura/Public/AbilitySystem/AuraAbilitySystemLibrary.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/GAS_Aura/Public/Actor/AuraProjectile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/GAS_Aura/Public/Actor/AuraProjectile.h" afterDir="false" />
-    </list>
+    <list default="true" id="c1070e44-1b1f-4811-b21b-8918ea5ad72b" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,7 +20,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://3" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://4" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/GAS_Aura/AuraLogChannels.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/GAS_Aura/AuraLogChannels.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/GAS_Aura/Private/AuraAbilityTypes.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -216,7 +205,7 @@
       <workItem from="1764218467537" duration="18191000" />
       <workItem from="1764288554948" duration="12755000" />
       <workItem from="1764375333353" duration="35330000" />
-      <workItem from="1764465444112" duration="3550000" />
+      <workItem from="1764465444112" duration="3858000" />
     </task>
     <servers />
   </component>
