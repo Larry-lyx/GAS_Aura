@@ -54,6 +54,7 @@ void AAuraBaseCharacter::MultiCastHandleDeath_Implementation(const FVector& Deat
 	Dissolve();
 	bDead = true;
 
+	BurnDebuffComponent->Deactivate();
 	OnDeath.Broadcast(this);
 }
 
