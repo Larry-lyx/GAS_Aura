@@ -45,18 +45,25 @@ public:
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
 
 	FOnASCRegistered OnASCRegistered;
-	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override;
+	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override;
 	FOnDeath OnDeath;
 	virtual FOnDeath& GetOnDeathDelegate() override;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
 
 	UPROPERTY(ReplicatedUsing = OnRep_Stunned , BlueprintReadOnly)
 	bool bIsStunned = false;
 
+	UPROPERTY(ReplicatedUsing = OnRep_Burned , BlueprintReadOnly)
+	bool bIsBurned = false;
+
 	UFUNCTION()
 	virtual void OnRep_Stunned();
+	UFUNCTION()
+	virtual void OnRep_Burned();
 
 protected:
 	bool bDead = false;

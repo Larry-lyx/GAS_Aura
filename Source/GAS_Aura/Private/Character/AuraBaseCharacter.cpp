@@ -30,6 +30,10 @@ AAuraBaseCharacter::AAuraBaseCharacter()
 	BurnDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("BurnDebuffComponent");
 	BurnDebuffComponent->SetupAttachment(GetRootComponent());
 	BurnDebuffComponent->DebuffTag = FAuraGameplayTags::Get().Debuff_Burn;
+
+	StunDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("StunDebuffComponent");
+	StunDebuffComponent->SetupAttachment(GetRootComponent());
+	StunDebuffComponent->DebuffTag = FAuraGameplayTags::Get().Debuff_Stun;
 }
 
 void AAuraBaseCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -37,6 +41,7 @@ void AAuraBaseCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AAuraBaseCharacter , bIsStunned);
+	DOREPLIFETIME(AAuraBaseCharacter , bIsBurned);
 }
 
 UAbilitySystemComponent* AAuraBaseCharacter::GetAbilitySystemComponent() const
@@ -64,6 +69,8 @@ void AAuraBaseCharacter::MultiCastHandleDeath_Implementation(const FVector& Deat
 	bDead = true;
 
 	BurnDebuffComponent->Deactivate();
+	StunDebuffComponent->Deactivate();
+	
 	OnDeath.Broadcast(this);
 }
 
@@ -87,7 +94,7 @@ USkeletalMeshComponent* AAuraBaseCharacter::GetWeapon_Implementation()
 	return Weapon;
 }
 
-FOnASCRegistered AAuraBaseCharacter::GetOnASCRegisteredDelegate()
+FOnASCRegistered& AAuraBaseCharacter::GetOnASCRegisteredDelegate()
 {
 	return OnASCRegistered;
 }
@@ -104,6 +111,10 @@ void AAuraBaseCharacter::StunTagChanged(const FGameplayTag CallbackTag, int32 Ne
 }
 
 void AAuraBaseCharacter::OnRep_Stunned()
+{
+}
+
+void AAuraBaseCharacter::OnRep_Burned()
 {
 }
 
