@@ -41,6 +41,8 @@ public:
 
 	UPROPERTY(BlueprintReadOnly , VisibleAnywhere)
 	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
+
+	virtual void OnRep_Stunned() override;
 	
 private:
 	UPROPERTY(VisibleAnywhere)

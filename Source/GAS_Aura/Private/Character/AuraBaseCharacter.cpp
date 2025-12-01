@@ -7,8 +7,10 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GAS_Aura/GAS_Aura.h"
 #include "Kismet/GameplayStatics.h"
+#include "Net/UnrealNetwork.h"
 
 AAuraBaseCharacter::AAuraBaseCharacter()
 {
@@ -28,6 +30,13 @@ AAuraBaseCharacter::AAuraBaseCharacter()
 	BurnDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("BurnDebuffComponent");
 	BurnDebuffComponent->SetupAttachment(GetRootComponent());
 	BurnDebuffComponent->DebuffTag = FAuraGameplayTags::Get().Debuff_Burn;
+}
+
+void AAuraBaseCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AAuraBaseCharacter , bIsStunned);
 }
 
 UAbilitySystemComponent* AAuraBaseCharacter::GetAbilitySystemComponent() const
@@ -86,6 +95,16 @@ FOnASCRegistered AAuraBaseCharacter::GetOnASCRegisteredDelegate()
 FOnDeath& AAuraBaseCharacter::GetOnDeathDelegate()
 {
 	return OnDeath;
+}
+
+void AAuraBaseCharacter::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	bIsStunned = NewCount > 0;
+	GetCharacterMovement()->MaxWalkSpeed = bIsStunned ? 0.f : BaseWalkSpeed;
+}
+
+void AAuraBaseCharacter::OnRep_Stunned()
+{
 }
 
 void AAuraBaseCharacter::BeginPlay()

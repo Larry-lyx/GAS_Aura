@@ -21,6 +21,8 @@ class GAS_AURA_API AAuraBaseCharacter : public ACharacter , public IAbilitySyste
 
 public:
 	AAuraBaseCharacter();
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
 
@@ -50,6 +52,12 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
 
+	UPROPERTY(ReplicatedUsing = OnRep_Stunned , BlueprintReadOnly)
+	bool bIsStunned = false;
+
+	UFUNCTION()
+	virtual void OnRep_Stunned();
+
 protected:
 	bool bDead = false;
 	
@@ -59,6 +67,11 @@ protected:
 
 	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Character Class Defaults")
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
+	virtual void StunTagChanged(const FGameplayTag CallbackTag , int32 NewCount);
+
+	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Combat")
+	float BaseWalkSpeed = 600.f;
 
 	/* Begin Combat */
 	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Combat")
