@@ -75,7 +75,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 					FGameplayTag MessageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
 					if (Tag.MatchesTag(MessageTag))
 					{
-						// A.1 MatachesTag A is True , while A MatchesTag A.1 is false
+						// A.1 MatchesTag A is True , while A MatchesTag A.1 is false
 						const FUIWidgetRow* Row = GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable , Tag);
 						MessageWidgetRowDelegate.Broadcast(*Row);
 					}
