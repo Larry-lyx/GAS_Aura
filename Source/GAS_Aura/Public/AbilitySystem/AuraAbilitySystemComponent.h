@@ -23,8 +23,9 @@ struct FGameplayTag;
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags , const FGameplayTagContainer& /* Asset Tags */);
 DECLARE_MULTICAST_DELEGATE(FAbilityGiven);
 DECLARE_DELEGATE_OneParam(FForEachAbility , const FGameplayAbilitySpec&);
-DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged , const FGameplayTag& /* Ability Tag */ , const FGameplayTag& /* Status Tag */ , int32 /* Ability Level */);
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged , const FGameplayTag& /* AbilityTag */ , const FGameplayTag& /* Status Tag */ , int32 /* Ability Level */);
 DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped , const FGameplayTag& /* AbilityTag */ , const FGameplayTag& /* Status */ , const FGameplayTag& /* Slot */ , const FGameplayTag& /* Previous Slot */);
+DECLARE_MULTICAST_DELEGATE_OneParam(FDeactivatePassiveAbility , const FGameplayTag&  /* AbilityTag */);
 
 UCLASS()
 class GAS_AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -38,6 +39,7 @@ public:
 	FAbilityGiven AbilityGivenDelegate;
 	FAbilityStatusChanged AbilityStatusChanged;
 	FAbilityEquipped AbilityEquipped;
+	FDeactivatePassiveAbility DeactivatePassiveAbility;
 
 	bool bStartupAbilityGiven;
 
