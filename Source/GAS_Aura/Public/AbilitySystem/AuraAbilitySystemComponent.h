@@ -26,6 +26,7 @@ DECLARE_DELEGATE_OneParam(FForEachAbility , const FGameplayAbilitySpec&);
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged , const FGameplayTag& /* AbilityTag */ , const FGameplayTag& /* Status Tag */ , int32 /* Ability Level */);
 DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped , const FGameplayTag& /* AbilityTag */ , const FGameplayTag& /* Status */ , const FGameplayTag& /* Slot */ , const FGameplayTag& /* Previous Slot */);
 DECLARE_MULTICAST_DELEGATE_OneParam(FDeactivatePassiveAbility , const FGameplayTag&  /* AbilityTag */);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FActivatePassiveEffect , const FGameplayTag& /* AbilityTag */ , bool /* bActivate */);
 
 UCLASS()
 class GAS_AURA_API UAuraAbilitySystemComponent : public UAbilitySystemComponent
@@ -40,6 +41,7 @@ public:
 	FAbilityStatusChanged AbilityStatusChanged;
 	FAbilityEquipped AbilityEquipped;
 	FDeactivatePassiveAbility DeactivatePassiveAbility;
+	FActivatePassiveEffect ActivatePassiveEffect;
 
 	bool bStartupAbilityGiven;
 
@@ -71,6 +73,9 @@ public:
 	/* Give & Activate & Release Ability End */ 
 
 	void UpgradeAttribute(const FGameplayTag& AttributeTag);
+
+	UFUNCTION(NetMulticast , Unreliable)
+	void MulticastActivatePassiveEffect(const FGameplayTag& AbilityTag , bool bActivate);
 
 	UFUNCTION(Server , Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);

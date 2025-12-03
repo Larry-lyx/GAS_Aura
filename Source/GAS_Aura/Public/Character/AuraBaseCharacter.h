@@ -8,6 +8,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraBaseCharacter.generated.h"
 
+class UPassiveNiagaraComponent;
 class UDebuffNiagaraComponent;
 class UGameplayAbility;
 class UGameplayEffect;
@@ -21,7 +22,8 @@ class GAS_AURA_API AAuraBaseCharacter : public ACharacter , public IAbilitySyste
 
 public:
 	AAuraBaseCharacter();
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+	virtual void Tick(float DeltaTime) override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
@@ -51,11 +53,6 @@ public:
 	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override;
 	FOnDeath OnDeath;
 	virtual FOnDeath& GetOnDeathDelegate() override;
-
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
 
 	UPROPERTY(ReplicatedUsing = OnRep_Stunned , BlueprintReadOnly)
 	bool bIsStunned = false;
@@ -148,6 +145,20 @@ protected:
 	UNiagaraSystem* BloodEffect;
 	UPROPERTY(EditAnywhere , BlueprintReadOnly , Category = "Combat")
 	USoundBase* DeathSound;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> HaloOfProtectionNiagaraComponent;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> HealthSiphonNiagaraComponent;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPassiveNiagaraComponent> ManaSiphonNiagaraComponent;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent> EffectAttachComponent;
 
 private:
 	UPROPERTY(EditAnywhere , Category = "Abilities")
