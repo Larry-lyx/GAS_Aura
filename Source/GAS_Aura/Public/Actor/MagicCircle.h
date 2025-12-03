@@ -14,11 +14,11 @@ class GAS_AURA_API AMagicCircle : public AActor
 public:	
 	AMagicCircle();
 	virtual void Tick(float DeltaTime) override;
+	
+	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
+	TObjectPtr<UDecalComponent> MagicCircleDecalComponent;
 
 protected:
 	virtual void BeginPlay() override;
-
-	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
-	TObjectPtr<UDecalComponent> MagicCircleDecalComponent;
 
 };

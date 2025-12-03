@@ -52,4 +52,9 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	void LevelUp();
+
+	UFUNCTION(BlueprintNativeEvent , BlueprintCallable)
+	void ShowMagicCircle(UMaterialInterface* DecalMaterial = nullptr);
+	UFUNCTION(BlueprintNativeEvent , BlueprintCallable)
+	void HideMagicCircle();
 };
