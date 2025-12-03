@@ -8,6 +8,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraBaseCharacter.generated.h"
 
+
 class UPassiveNiagaraComponent;
 class UDebuffNiagaraComponent;
 class UGameplayAbility;
@@ -24,6 +25,8 @@ public:
 	AAuraBaseCharacter();
 	virtual void Tick(float DeltaTime) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
@@ -53,6 +56,9 @@ public:
 	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override;
 	FOnDeath OnDeath;
 	virtual FOnDeath& GetOnDeathDelegate() override;
+
+	FOnDamageSignature OnDamageDelegate;
+	virtual FOnDamageSignature& GetOnDamageDelegate() override;
 
 	UPROPERTY(ReplicatedUsing = OnRep_Stunned , BlueprintReadOnly)
 	bool bIsStunned = false;

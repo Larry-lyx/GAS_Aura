@@ -17,7 +17,7 @@ void UAuraDamageGameplayAbility::CauseDamage(AActor* TargetActor)
 		);
 }
 
-FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor) const
+FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor,FVector InRadialDamageOrigin) const
 {
 	FDamageEffectParams Params;
 
@@ -52,7 +52,7 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 		Params.bIsRadialDamage = bIsRadialDamage;
 		Params.RadialDamageInnerRadius = RadialDamageInnerRadius;
 		Params.RadialDamageOuterRadius = RadialDamageOuterRadius;
-		Params.RadialDamageOrigin = RadialDamageOrigin;
+		Params.RadialDamageOrigin = InRadialDamageOrigin;
 	}
 	return Params;
 }

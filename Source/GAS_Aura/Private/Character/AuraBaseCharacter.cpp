@@ -61,6 +61,14 @@ void AAuraBaseCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AAuraBaseCharacter , bIsBeingShocked);
 }
 
+float AAuraBaseCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	class AController* EventInstigator, AActor* DamageCauser)
+{
+	const float DamageTaken =  Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	OnDamageDelegate.Broadcast(DamageTaken);
+	return DamageTaken;
+}
+
 UAbilitySystemComponent* AAuraBaseCharacter::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
@@ -129,6 +137,11 @@ FOnASCRegistered& AAuraBaseCharacter::GetOnASCRegisteredDelegate()
 FOnDeath& AAuraBaseCharacter::GetOnDeathDelegate()
 {
 	return OnDeath;
+}
+
+FOnDamageSignature& AAuraBaseCharacter::GetOnDamageDelegate()
+{
+	return OnDamageDelegate;
 }
 
 void AAuraBaseCharacter::StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
