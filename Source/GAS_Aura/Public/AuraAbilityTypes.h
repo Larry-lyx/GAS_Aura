@@ -111,6 +111,7 @@ public:
 	void SetBlockedHit(bool bInIsBlockedHit) {bIsBlockedHit = bInIsBlockedHit;}
 	void SetCriticalHit(bool bInIsCriticalHit) {bIsCriticalHit = bInIsCriticalHit;}
 	void SetSuccessfulDebuff(bool bInIsSuccessfulDebuff){ bIsSuccessfulDebuff = bInIsSuccessfulDebuff;}
+	void SetRadialDamage(bool bInIsRadialDamage){bIsRadialDamage = bInIsRadialDamage;}
 	void SetDebuffDamage(float InDebuffDamage) { DebuffDamage = InDebuffDamage;}
 	void SetDebuffDuration(float InDebuffDuration) { DebuffDuration = InDebuffDuration;}
 	void SetDebuffFrequency(float InDebuffFrequency){ DebuffFrequency = InDebuffFrequency;}
