@@ -14,6 +14,7 @@
 #include "Actor/MagicCircle.h"
 #include "Components/DecalComponent.h"
 #include "Components/SplineComponent.h"
+#include "GAS_Aura/GAS_Aura.h"
 #include "Input/AuraInputComponent.h"
 #include "Interaction/EnemyInterface.h"
 
@@ -136,8 +137,9 @@ void AAuraPlayerController::CursorTrace()
 		ThisActor = nullptr;
 		return;
 	}
-	
-	GetHitResultUnderCursor(ECC_Visibility , false , CursorHitResult);
+
+	const ECollisionChannel TraceChannel = IsValid(MagicCircle) ? ECC_ExcludePlayers : ECC_Visibility;
+	GetHitResultUnderCursor(TraceChannel , false , CursorHitResult);
 	if (!CursorHitResult.bBlockingHit) return;
 
 	LastActor = ThisActor;
