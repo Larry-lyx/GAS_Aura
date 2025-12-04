@@ -32,7 +32,7 @@ protected:
 	virtual void BeginPlay() override;
 	
 	UFUNCTION(BlueprintCallable)
-	void OnHit();
+	virtual void OnHit();
 	
 	virtual void Destroyed() override;
 
@@ -43,6 +43,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
 	TObjectPtr<USphereComponent> Sphere;
+	
+	UPROPERTY()
+	TObjectPtr<UAudioComponent> LoopingSoundComponent;
 	
 	bool bHit = false;
 	
@@ -58,8 +61,5 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase> LoopingSound;
-
-	UPROPERTY()
-	TObjectPtr<UAudioComponent> LoopingSoundComponent;
 
 };
