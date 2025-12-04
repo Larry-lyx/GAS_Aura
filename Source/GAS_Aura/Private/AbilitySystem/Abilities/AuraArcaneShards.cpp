@@ -12,7 +12,7 @@ FString UAuraArcaneShards::GetDescription(int32 Level)
 	if (Level == 1)
 	{
 		return FString::Printf(TEXT(
-			"<Title>ArcaneShards</>\n\n"
+			"<Title>ARCANE SHARDS</>\n\n"
 			"<Small>Level:</><Level>%d</>\n"
 			"<Small>Mana Cost:</><ManaCost>%.1f</>\n"
 			"<Small>Cooldown:</><Cooldown>%.1f</>\n\n"
