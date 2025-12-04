@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
+#include "AuraAbilityTypes.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "Data/CharacterClassInfo.h"
@@ -110,8 +112,16 @@ public:
 	static void SetRadialDamageOuterRadius(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle ,float InRadialDamageOuterRadius);
 	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static void SetRadialDamageOrigin(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle ,const FVector& InOrigin);
-	
 
+	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static void SetIsRadialDamageEffectParams(UPARAM(ref) FDamageEffectParams& DamageEffectParams , bool bIsRadial , float InnerRadius , float OuterRadius , FVector Origin);
+	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static void SetKnockbackDirection(UPARAM(ref) FDamageEffectParams& DamageEffectParams , FVector KnockbackDirection , float Magnitude = 0.f);
+	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static void SetDeathImpulseDirection(UPARAM(ref) FDamageEffectParams& DamageEffectParams , FVector DeathImpulseDirection , float Magnitude = 0.f);
+	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayEffects")
+	static void SetEffectParamsTargetASC(UPARAM(ref) FDamageEffectParams& DamageEffectParams , UAbilitySystemComponent* InASC);
+		
 	UFUNCTION(BlueprintCallable , Category = "AuraAbilitySystemLibrary|GameplayMechanics")
 	static void GetLivePlayerWithRadius(const UObject* WorldContextObject , TArray<AActor*> &OutOverlappingActors , TArray<AActor*> ActorsToIgnore , float Radius , const FVector& SphereOrigin);
 	UFUNCTION(BlueprintPure , Category = "AuraAbilitySystemLibrary|GameplayMechanics")
