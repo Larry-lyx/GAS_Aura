@@ -37,6 +37,8 @@ public:
 
 	int32 GetNumLoadSlots() const {return NumLoadSlots;}
 
+	void LoadData();
+
 private:
 	UPROPERTY()
 	TMap<int32 , UMVVM_LoadSlot*> LoadSlots;
