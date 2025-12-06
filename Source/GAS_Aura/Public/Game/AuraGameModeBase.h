@@ -30,5 +30,17 @@ public:
 	static void DeleteSlot(const FString& SlotName , int32 SlotIndex);
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<USaveGame> LoadScreenSaveDataClass; 
+	TSubclassOf<USaveGame> LoadScreenSaveDataClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	FString DefaultMapName;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSoftObjectPtr<UWorld> DefaultMap;
+
+	UPROPERTY(EditDefaultsOnly)
+	TMap<FString , TSoftObjectPtr<UWorld>> Maps;
+
+protected:
+	virtual void BeginPlay() override;
 };
