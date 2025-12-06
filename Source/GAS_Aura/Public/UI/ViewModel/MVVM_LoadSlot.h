@@ -12,6 +12,7 @@
  */
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FSetWidgetSwitcherIndex , int32 , WidgetSwitcherIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnableSelectSlotButton , bool , bEnable);
 
 UCLASS()
 class GAS_AURA_API UMVVM_LoadSlot : public UMVVMViewModelBase
@@ -21,6 +22,9 @@ class GAS_AURA_API UMVVM_LoadSlot : public UMVVMViewModelBase
 public:
 	UPROPERTY(BlueprintAssignable)
 	FSetWidgetSwitcherIndex SetWidgetSwitcherIndex;
+
+	UPROPERTY(BlueprintAssignable)
+	FEnableSelectSlotButton EnableSelectSlotButton;
 
 	void InitializeSlot();
 
