@@ -17,9 +17,6 @@ class GAS_AURA_API IEnemyInterface
 	GENERATED_BODY()
 
 public:
-	virtual void HighlightActor() = 0;
-	virtual void UnHighlightActor() = 0;
-
 	UFUNCTION(BlueprintCallable , BlueprintNativeEvent)
 	void SetCombatTarget(AActor* InCombatTarget);
 

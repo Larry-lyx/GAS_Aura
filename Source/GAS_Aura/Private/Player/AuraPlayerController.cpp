@@ -16,7 +16,7 @@
 #include "Components/SplineComponent.h"
 #include "GAS_Aura/GAS_Aura.h"
 #include "Input/AuraInputComponent.h"
-#include "Interaction/EnemyInterface.h"
+#include "Interaction/HighlightInterface.h"
 
 AAuraPlayerController::AAuraPlayerController()
 {
@@ -143,7 +143,7 @@ void AAuraPlayerController::CursorTrace()
 	if (!CursorHitResult.bBlockingHit) return;
 
 	LastActor = ThisActor;
-	ThisActor = Cast<IEnemyInterface>(CursorHitResult.GetActor());
+	ThisActor = Cast<IHighlightInterface>(CursorHitResult.GetActor());
 
 	if (LastActor != ThisActor)
 	{

@@ -8,6 +8,7 @@
 #include "GameplayTagContainer.h"
 #include "AuraPlayerController.generated.h"
 
+class IHighlightInterface;
 class AMagicCircle;
 class UNiagaraSystem;
 class UDamageTextComponent;
@@ -16,7 +17,6 @@ class UAuraAbilitySystemComponent;
 class UAuraConfigInput;
 class UInputMappingContext;
 class UInputAction;
-class IEnemyInterface;
 
 struct FInputActionValue;
 
@@ -68,8 +68,8 @@ private:
 	/* Begin Cursor Trace */
 	void CursorTrace();
 	
-	IEnemyInterface* LastActor;
-	IEnemyInterface* ThisActor;
+	IHighlightInterface* LastActor;
+	IHighlightInterface* ThisActor;
 
 	FHitResult CursorHitResult;
 	/* End Cursor Trace */
