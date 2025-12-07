@@ -56,7 +56,9 @@ class GAS_AURA_API UCharacterClassInfo : public UDataAsset
 public:
 	UPROPERTY(EditDefaultsOnly , Category = "Character Class Default")
 	TMap<ECharacterClass , FCharacterClassDefaultInfo> CharacterClassInformation;
-	
+
+	UPROPERTY(EditDefaultsOnly , Category = "Common Class Default")
+	TSubclassOf<UGameplayEffect> PrimaryAttributes_SetByCaller;
 	UPROPERTY(EditDefaultsOnly , Category = "Common Class Default")
 	TSubclassOf<UGameplayEffect> SecondaryAttributes;
 	UPROPERTY(EditDefaultsOnly , Category = "Common Class Default")
