@@ -45,7 +45,10 @@ void ACheckPoint::SetMoveToLocation_Implementation(FVector& OutDestination)
 
 void ACheckPoint::HighlightActor_Implementation()
 {
-	CheckPointMesh->SetRenderCustomDepth(true);
+	if (!bReached)
+	{
+		CheckPointMesh->SetRenderCustomDepth(true);
+	}
 }
 
 void ACheckPoint::UnHighlightActor_Implementation()
@@ -74,7 +77,10 @@ void ACheckPoint::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Sphere->OnComponentBeginOverlap.AddDynamic(this , &ACheckPoint::OnSphereOverlap);
+	if (bBindOverlapCallback)
+	{
+		Sphere->OnComponentBeginOverlap.AddDynamic(this , &ACheckPoint::OnSphereOverlap);	
+	}
 }
 
 void ACheckPoint::HandleGlowEffects()

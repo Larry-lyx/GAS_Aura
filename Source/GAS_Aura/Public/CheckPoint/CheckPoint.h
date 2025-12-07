@@ -32,8 +32,11 @@ public:
 	virtual void UnHighlightActor_Implementation() override;
 	/* Highlight Interface */
 
-	UPROPERTY(BlueprintReadOnly , SaveGame)
+	UPROPERTY(BlueprintReadWrite , SaveGame)
 	bool bReached = false;
+
+	UPROPERTY(EditAnywhere)
+	bool bBindOverlapCallback = true;
 
 protected:
 	int32 CustomDepthStencilOverride = CUSTOM_DEPTH_TAN;
@@ -49,6 +52,7 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void CheckPointReached(UMaterialInstanceDynamic* DynamicMaterialInstance);
 
+	UFUNCTION(BlueprintCallable)
 	void HandleGlowEffects();
 
 	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
