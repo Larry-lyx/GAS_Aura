@@ -20,6 +20,13 @@ class UInputAction;
 
 struct FInputActionValue;
 
+enum class ETargetingStatus : uint8
+{
+	TargetingEnemy ,
+	TargetingNonEnemy ,
+	NotTargeting
+};
+
 UCLASS()
 class GAS_AURA_API AAuraPlayerController : public APlayerController
 {
@@ -67,9 +74,14 @@ private:
 
 	/* Begin Cursor Trace */
 	void CursorTrace();
-	
-	IHighlightInterface* LastActor;
-	IHighlightInterface* ThisActor;
+
+	UPROPERTY()
+	TObjectPtr<AActor> LastActor;
+	UPROPERTY()
+	TObjectPtr<AActor> ThisActor;
+
+	static void HighlightActor(AActor* InActor);
+	static void UnHighlightActor(AActor* InActor);
 
 	FHitResult CursorHitResult;
 	/* End Cursor Trace */
@@ -88,7 +100,7 @@ private:
 	float FollowTime = 0.f;
 	float ShortPressedThreshold = 0.5f;
 	bool bAutoRunning = false;
-	bool bTargeting = false;
+	ETargetingStatus TargetingStatus = ETargetingStatus::NotTargeting;
 
 	UPROPERTY(EditDefaultsOnly)
 	float AutoRunAcceptanceRadius = 50.f;
