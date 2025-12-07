@@ -58,7 +58,6 @@ protected:
 	UPROPERTY(VisibleAnywhere , BlueprintReadOnly)
 	TObjectPtr<UStaticMeshComponent> CheckPointMesh;
 	
-private:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USphereComponent> Sphere;
 };
