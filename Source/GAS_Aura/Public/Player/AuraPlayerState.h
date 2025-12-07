@@ -11,7 +11,8 @@ class ULevelUpInfo;
 class UAbilitySystemComponent;
 class UAttributeSet;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChanged , int32 /* StatValue */)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChanged , int32 /* StatValue */);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnLevelChanged, int32 /* StatValue */ , bool /* bLevelUp */);
 
 UCLASS()
 class GAS_AURA_API AAuraPlayerState : public APlayerState, public IAbilitySystemInterface
@@ -28,7 +29,7 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<ULevelUpInfo> LevelUpInfo;
 
-	FOnPlayerStatChanged OnLevelChangedDelegate;
+	FOnLevelChanged OnLevelChangedDelegate;
 	FOnPlayerStatChanged OnXPChangedDelegate;
 	FOnPlayerStatChanged OnAttributePointsChangedDelegate;
 	FOnPlayerStatChanged OnSpellPointsChangedDelegate;
