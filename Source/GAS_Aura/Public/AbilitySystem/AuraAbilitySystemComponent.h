@@ -17,6 +17,7 @@
  * Almost all the functions in GAS should be called through ASC
  */
 
+class ULoadScreenSaveGame;
 class UAuraAbilitySystemComponent;
 struct FGameplayTag;
 
@@ -42,6 +43,8 @@ public:
 	FAbilityEquipped AbilityEquipped;
 	FDeactivatePassiveAbility DeactivatePassiveAbility;
 	FActivatePassiveEffect ActivatePassiveEffect;
+
+	void AddCharacterAbilitiesFromSaveData(ULoadScreenSaveGame* SaveData);
 
 	bool bStartupAbilityGiven;
 
