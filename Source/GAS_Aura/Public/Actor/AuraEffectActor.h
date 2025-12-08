@@ -46,9 +46,40 @@ class GAS_AURA_API AAuraEffectActor : public AActor
 	
 public:	
 	AAuraEffectActor();
+	virtual void Tick(float DeltaSeconds) override;
 	
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere , BlueprintReadWrite , Category = "Pickup Movement")
+	bool bRotates = false;
+
+	UPROPERTY(EditAnywhere , BlueprintReadWrite , Category = "Pickup Movement")
+	float RotationRate = 45.f;
+
+	UPROPERTY(EditAnywhere , BlueprintReadWrite , Category = "Pickup Movement")
+	bool bSinusoidalMovement = false;
+
+	UPROPERTY(EditAnywhere , BlueprintReadWrite , Category = "Pickup Movement")
+	float SineAmplitude = 8.f;
+
+	UPROPERTY(EditAnywhere , BlueprintReadWrite , Category = "Pickup Movement")
+	float SinePeriodConstant = 4.f;
+
+	UPROPERTY(EditAnywhere , BlueprintReadWrite , Category = "Pickup Movement")
+	FVector InitialLocation;
+
+	UPROPERTY(BlueprintReadWrite)
+	FVector CalculatedLocation;
+
+	UPROPERTY(BlueprintReadOnly)
+	FRotator CalculatedRotation;
+
+	UFUNCTION(BlueprintCallable)
+	void SinusoidalMovement();
+
+	UFUNCTION(BlueprintCallable)
+	void StartRotation();
 
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor* TargetActor , TSubclassOf<UGameplayEffect> GameplayEffectClass);
@@ -84,5 +115,9 @@ protected:
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy = EEffectRemovalPolicy::RemoveOnEndOverlap;
 	
 	TMap<FActiveGameplayEffectHandle , UAbilitySystemComponent*> ActiveEffectHandles;
-	
+
+private:
+	float RunningTime = 0.f;
+
+	void ItemMovement(float DeltaTime);
 };
