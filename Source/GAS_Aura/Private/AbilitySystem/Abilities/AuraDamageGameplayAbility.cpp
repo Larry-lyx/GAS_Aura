@@ -39,6 +39,8 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	Params.KnockbackForceMagnitude = KnockbackForceMagnitude;
 	Params.KnockbackChance = KnockbackChance;
 
+	const bool bKnockback = FMath::RandRange(1 , 100) < Params.KnockbackChance;
+
 	if (IsValid(TargetActor))
 	{
 		FRotator Rotation = (TargetActor->GetActorLocation() - GetAvatarActorFromActorInfo()->GetActorLocation()).Rotation();
@@ -52,13 +54,13 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 		{
 			Params.DeathImpulse = ToTarget * Params.DeathImpulseMagnitude;
 		}
-		if (!bOverrideDeathImpulse)
+		if (!bOverrideDeathImpulse && bKnockback)
 		{
 			Params.KnockbackForce = ToTarget * Params.KnockbackForceMagnitude;	
 		}
 	}
 
-	if (bOverrideKnockbackDirection)
+	if (bOverrideKnockbackDirection && bKnockback)
 	{
 		KnockbackDirectionOverride.Normalize();
 		Params.KnockbackForce = KnockbackForceMagnitude * KnockbackDirectionOverride;
