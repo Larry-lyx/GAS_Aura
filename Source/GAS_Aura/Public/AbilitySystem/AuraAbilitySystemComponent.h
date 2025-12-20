@@ -6,17 +6,6 @@
 #include "AbilitySystemComponent.h"
 #include "AuraAbilitySystemComponent.generated.h"
 
-/**
- * Custom ASC based On UAbilitySystemComponent
- *
- * main functions added:
- * 1. When GE applied to Character , broadcast its containing gameplay tags
- * 2. Give , Activate and Release GA
- *
- * Basically , ASC hold every information we need in GAS
- * Almost all the functions in GAS should be called through ASC
- */
-
 class ULoadScreenSaveGame;
 class UAuraAbilitySystemComponent;
 struct FGameplayTag;
@@ -66,31 +55,54 @@ public:
 	FGameplayAbilitySpec* GetSpecWithSlot(const FGameplayTag& Slot);
 
 	static void AssignSlotToAbility(FGameplayAbilitySpec& Spec , const FGameplayTag& Slot);
-
-	/* Give & Activate & Release Ability Begin */
+	
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilities);
 	void AbilityInputTagPressed(const FGameplayTag& InputTag);
 	void AbilityInputTagHeld(const FGameplayTag& InputTag);
 	void AbilityInputTagReleased(const FGameplayTag& InputTag);
-	/* Give & Activate & Release Ability End */ 
 
 	void UpgradeAttribute(const FGameplayTag& AttributeTag);
 
+	/**
+	 * Multicast RPC implementation to trigger passive ability effects.
+	 * Broadcasts a signal to activate/deactivate passive Niagara systems (project-specific behavior).
+	 */
 	UFUNCTION(NetMulticast , Unreliable)
 	void MulticastActivatePassiveEffect(const FGameplayTag& AbilityTag , bool bActivate);
 
+	/**
+	 * Server-authoritative implementation for attribute upgrade.
+	 * Sends a gameplay event (with magnitude 1) to trigger attribute modification
+	 * (this is because Aura has GA_ListenForEvent, which can listen for event and use payload to make and apply GE to self),
+	 * then deducts 1 attribute point from the avatar actor (via PlayerInterface).
+	 */
 	UFUNCTION(Server , Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
 
 	void UpdateAbilityStatus(int32 Level);
 
+	/**
+	 * Server-authoritative RPC implementation to spend spell points and update ability status.
+	 * Converts eligible abilities to unlocked status, levels up unlocked/equipped abilities,
+	 * deducts 1 spell point (via CombatInterface), and notifies UI of ability changes.
+	 */
 	UFUNCTION(Server , Reliable)
 	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag);
 
+	/**
+	 * Server-authoritative RPC implementation to equip abilities (passive/offensive).
+	 * Handles slot assignment logic: clears target slot (deactivates passive abilities in slot if needed),
+	 * auto-activates new passive abilities, updates ability status to "Equipped", assigns slot to ability,
+	 * marks spec as dirty, and notifies client of equip state.
+	 */
 	UFUNCTION(Server , Reliable)
 	void ServerEquipAbility(const FGameplayTag& AbilityTag , const FGameplayTag& Slot);
 
+	/**
+	 * Client-side RPC implementation to broadcast ability equip state to UI.
+	 * Triggers UI updates with ability's tag, status, assigned slot, and previous slot (if any).
+	 */
 	UFUNCTION(Client , Reliable)
 	void ClientEquipAbility(const FGameplayTag& AbilityTag , const FGameplayTag& Status , const FGameplayTag& Slot , const FGameplayTag& PreviousSlot);
 
@@ -102,10 +114,18 @@ public:
 	
 protected:
 	virtual void OnRep_ActivateAbilities() override;
-	
+
+	/**
+	 * Client-side callback for Gameplay Effect application to this ASC.
+	 * Extracts all AssetTags from the applied GE and broadcasts them for UI/widget consumption.
+	 */
 	UFUNCTION(Client , Reliable)
 	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent , const FGameplayEffectSpec& EffectSpec , FActiveGameplayEffectHandle ActiveEffectHandle);
 
+	/**
+	 * Client-side RPC implementation to notify UI widgets of ability status changes.
+	 * Broadcasts updated ability state (tag, status, level) to client-side UI components.
+	 */
 	UFUNCTION(Client , Reliable)
 	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag , const FGameplayTag& StatusTag , int32 AbilityLevel);
 };

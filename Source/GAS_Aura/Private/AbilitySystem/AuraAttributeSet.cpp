@@ -14,12 +14,11 @@
 #include "Interaction/PlayerInterface.h"
 #include "Player/AuraPlayerController.h"
 
+/**
+ * Construction for Attribute Set, bind tags to attribute by a map(TagToAttribute)
+ */
 UAuraAttributeSet::UAuraAttributeSet()
 {
-	/**
-	 * Bind Tag to Attribute
-	 */
-	
 	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
 	
 	TagToAttribute.Add(GameplayTags.Attributes_Primary_Strength , GetStrengthAttribute);
@@ -44,11 +43,11 @@ UAuraAttributeSet::UAuraAttributeSet()
 	TagToAttribute.Add(GameplayTags.Attributes_Resistance_Physical , GetPhysicalResistanceAttribute);
 }
 
+/**
+ * All Attributes Change will be replicated from Server to Client with no condition
+ */
 void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
-	/**
-	 * All Attributes Change will be replicated from Server to Client with no condition
-	 */
 	
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
@@ -77,16 +76,15 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<class FLifetimePropert
 	DOREPLIFETIME_CONDITION_NOTIFY(UAuraAttributeSet , Mana , COND_None , REPNOTIFY_Always);
 }
 
+/**
+ * Clamp before Attribute Change
+ * it means when some GE is going to change attribute value to an illegal value
+ * this illegal change will be clamped
+ * 
+ * However , this usually doesn't work , as it never changes the real value of the attribute
+ */
 void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
-	/**
-	 * Clamp before Attribute Change
-	 * it means when some GE is going to change attribute value to an illegal value
-	 * this illegal change will be clamped
-	 * 
-	 * However , this usually doesn't work , as it never changes the real value of the attribute
-	 */
-	
 	Super::PreAttributeChange(Attribute, NewValue);
 
 	if (Attribute == GetHealthAttribute())
@@ -99,12 +97,11 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	}
 }
 
+/**
+ * After GE applied , we should calculate the change of attribute values
+ */
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
-	/**
-	 * After GE applied , we should calculate the change of attribute values
-	 */
-	
 	Super::PostGameplayEffectExecute(Data);
 
 	FEffectProperties Props;
@@ -430,14 +427,20 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, float D
 {
 	if (Props.SourceCharacter != Props.TargetCharacter)
 	{
-		if (AAuraPlayerController* PC = Cast<AAuraPlayerController>(Props.SourceCharacter->Controller))
+		if (IsValid(Props.SourceCharacter))
 		{
-			PC->ShowDamageNumber(Damage , Props.TargetCharacter , bBlockedHit , bCriticalHit);
-			return;
+			if (AAuraPlayerController* PC = Cast<AAuraPlayerController>(Props.SourceCharacter->Controller))
+			{
+				PC->ShowDamageNumber(Damage , Props.TargetCharacter , bBlockedHit , bCriticalHit);
+				return;
+			}
 		}
-		if (AAuraPlayerController* PC = Cast<AAuraPlayerController>(Props.TargetCharacter->Controller))
+		if (IsValid(Props.TargetCharacter))
 		{
-			PC->ShowDamageNumber(Damage , Props.TargetCharacter , bBlockedHit , bCriticalHit);
+			if (AAuraPlayerController* PC = Cast<AAuraPlayerController>(Props.TargetCharacter->Controller))
+			{
+				PC->ShowDamageNumber(Damage , Props.TargetCharacter , bBlockedHit , bCriticalHit);
+			}
 		}
 	}
 }

@@ -73,6 +73,8 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
+	
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 	
 	/* Primary Attributes Settings Begin */
@@ -211,8 +213,6 @@ public:
 	FGameplayAttributeData IncomingXP;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet , IncomingXP);
 	/* Meta Attributes Settings End */
-
-	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;
 
 private:
 	void HandleIncomingDamage(const FEffectProperties& Props);
